@@ -8,11 +8,9 @@ push () {
   cd ..
 }
 
-push cynosure
-push refinement
-push external
-push tle
+push cynosure-2
+push cle-toolchain
 
 git add .
-git commit "$@" -m 'updates'
+git commit
 git push

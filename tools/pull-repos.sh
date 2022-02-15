@@ -7,7 +7,5 @@ pull () {
 }
 
 git pull
-pull cynosure
-pull refinement
-pull external
-pull tle
+pull cynosure-2
+pull cle-toolchain
