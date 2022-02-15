@@ -1,0 +1,3 @@
+[submodule "cynosure-2"]
+	path = cynosure-2
+	url = git@github.com:oc-ulos/oc-cynosure-2
