@@ -1,15 +1,7 @@
 #!/bin/bash
 
-commit () {
-  cd $1
-  git add .
-  git commit
-  cd ..
-}
-
-commit cynosure-2
-commit cle-toolchain
-commit liblua
+git submodule foreach foreach git add .
+git submodule foreach git commit
 
 git add .
 if [ "$#" -lt 0 ] ; then

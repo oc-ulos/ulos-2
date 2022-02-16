@@ -8,9 +8,9 @@ push () {
   cd ..
 }
 
-push cynosure-2
-push cle-toolchain
-push liblua
+git submodule foreach git add .
+git submodule foreach git commit
+git submodule foreach git push
 
 git add .
 git commit
