@@ -4,3 +4,6 @@
 [submodule "cle-toolchain"]
 	path = cle-toolchain
 	url = git@github.com:oc-ulos/cle-toolchain
+[submodule "liblua"]
+	path = liblua
+	url = git@github.com:oc-ulos/liblua.git
