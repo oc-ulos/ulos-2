@@ -9,3 +9,4 @@ pull () {
 git pull
 pull cynosure-2
 pull cle-toolchain
+pull liblua

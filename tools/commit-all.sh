@@ -9,6 +9,7 @@ commit () {
 
 commit cynosure-2
 commit cle-toolchain
+commit liblua
 
 git add .
 if [ "$#" -lt 0 ] ; then

@@ -10,6 +10,7 @@ push () {
 
 push cynosure-2
 push cle-toolchain
+push liblua
 
 git add .
 git commit
