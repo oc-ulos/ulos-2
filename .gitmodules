@@ -10,3 +10,6 @@
 [submodule "reknit"]
 	path = reknit
 	url = git@github.com:oc-ulos/reknit
+[submodule "coreutils"]
+	path = coreutils
+	url = git@github.com:oc-ulos/coreutils
