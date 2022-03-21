@@ -7,3 +7,6 @@
 [submodule "liblua"]
 	path = liblua
 	url = git@github.com:oc-ulos/liblua.git
+[submodule "reknit"]
+	path = reknit
+	url = git@github.com:oc-ulos/reknit
