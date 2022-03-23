@@ -8,7 +8,7 @@ printf "=> Removing old build files...\n"
 rm -rf build cynosure-2/kernel.lua
 
 printf "=> Creating base directory structure\n"
-mkdir -p build/{boot,bin,lib,usr/lib}
+mkdir -p build/{boot,bin,lib,etc,usr/lib}
 
 printf "=> Assembling Cynosure 2\n"
 cd cynosure-2
@@ -28,15 +28,17 @@ entry Cynosure 2 (default)
   flags init=/bin/init.lua loglevel=5
   boot /boot/cynosure.lua
 entry Cynosure 2 (debug)
-  flags init=/bin/init.lua loglevel=8
+  flags init=/bin/init.lua loglevel=8 log_process_deaths
   boot /boot/cynosure.lua
 default 1
 timeout 3
 " > build/boot/cldr.cfg
+echo "shell:1:respawn:/bin/sh.lua" > build/etc/inittab
 cp cynosure-2/kernel.lua build/boot/cynosure.lua
 cp reknit/init.lua build/bin/
 cp -r liblua/src/ build/lib/lua
 mv build/lib/{lua/,}package.lua
 cp coreutils/src/* build/bin/
+cp -r liblua/lang build/etc/
 
 printf "=> Done!\n"
