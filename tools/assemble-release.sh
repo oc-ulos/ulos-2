@@ -24,6 +24,7 @@ printf "=> Copying in files\n"
 cp cldr/cldr.lua build/init.lua
 cp config/cldr.cfg build/boot/cldr.cfg
 cp config/inittab build/etc/inittab
+cp config/fstab build/etc/fstab
 cp cynosure-2/kernel.lua build/boot/cynosure.lua
 cp reknit/init.lua build/bin/
 cp -r liblua/src/ build/lib/lua

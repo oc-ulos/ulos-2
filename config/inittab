@@ -1,2 +1,2 @@
-mnt:0:once:/bin/readfstab.lua
+mnt:1:wait:/bin/readfstab.lua
 shel:1:respawn:/bin/sh.lua
