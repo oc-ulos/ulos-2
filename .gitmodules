@@ -13,3 +13,6 @@
 [submodule "coreutils"]
 	path = coreutils
 	url = git@github.com:oc-ulos/coreutils
+[submodule "cldr"]
+	path = cldr
+	url = git@github.com:oc-ulos/cldr-2
