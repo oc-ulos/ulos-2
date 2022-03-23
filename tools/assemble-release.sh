@@ -22,18 +22,8 @@ cd ..
 
 printf "=> Copying in files\n"
 cp cldr/cldr.lua build/init.lua
-echo "
-# ULOS 2 default configuration
-entry Cynosure 2 (default)
-  flags init=/bin/init.lua loglevel=5
-  boot /boot/cynosure.lua
-entry Cynosure 2 (debug)
-  flags init=/bin/init.lua loglevel=8 log_process_deaths
-  boot /boot/cynosure.lua
-default 1
-timeout 3
-" > build/boot/cldr.cfg
-echo "shell:1:respawn:/bin/sh.lua" > build/etc/inittab
+cp config/cldr.cfg build/boot/cldr.cfg
+cp config/inittab build/etc/inittab
 cp cynosure-2/kernel.lua build/boot/cynosure.lua
 cp reknit/init.lua build/bin/
 cp -r liblua/src/ build/lib/lua
