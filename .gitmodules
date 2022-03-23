@@ -16,3 +16,6 @@
 [submodule "cldr"]
 	path = cldr
 	url = git@github.com:oc-ulos/cldr-2
+[submodule "luash"]
+	path = luash
+	url = git@github.com:oc-ulos/luash
