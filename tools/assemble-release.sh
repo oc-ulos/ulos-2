@@ -8,7 +8,7 @@ printf "=> Removing old build files...\n"
 rm -rf build cynosure-2/kernel.lua
 
 printf "=> Creating base directory structure\n"
-mkdir -p build/{boot,bin,lib,etc,usr/lib}
+mkdir -p build/{boot,bin,lib,etc/ulos,usr/lib}
 
 printf "=> Assembling Cynosure 2\n"
 cd cynosure-2
@@ -23,8 +23,8 @@ cd ..
 printf "=> Copying in files\n"
 cp cldr/cldr.lua build/init.lua
 cp config/cldr.cfg build/boot/cldr.cfg
-cp config/inittab build/etc/inittab
-cp config/fstab build/etc/fstab
+cp config/{inittab,fstab,os-release} build/etc/
+cp config/welcome.lua build/etc/ulos/
 cp cynosure-2/kernel.lua build/boot/cynosure.lua
 cp reknit/init.lua build/bin/
 cp -r liblua/src/ build/lib/lua

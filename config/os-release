@@ -1,0 +1,5 @@
+NAME="ULOS 2"
+PRETTY_NAME="The Unix-Like Operating System 2"
+ID=ulos2
+BUILD_ID=rolling
+ANSI_COLOR="38;2;102;182;255"

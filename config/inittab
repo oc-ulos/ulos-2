@@ -1,2 +1,3 @@
 mnt:1:wait:/bin/readfstab.lua
+welc:1:wait:/etc/ulos/welcome.lua
 shel:1:respawn:/bin/sh.lua
