@@ -30,7 +30,7 @@ cp reknit/init.lua build/bin/
 cp -r liblua/src/ build/lib/lua
 mv build/lib/{lua/,}package.lua
 cp coreutils/src/* build/bin/
-cp -r luash/{bin,lib} build/
+cp -r luash/{bin,lib,etc} build/
 cp -r liblua/lang build/etc/
 
 printf "=> Done!\n"
