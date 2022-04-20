@@ -33,4 +33,28 @@ cp coreutils/src/* build/bin/
 cp -r luash/{bin,lib,etc} build/
 cp -r liblua/lang build/etc/
 
+printf "=> Setting file permissions\n"
+for f in $(find build); do
+  if [ $f != "build" ]; then
+    mode=33188
+    if [ -d $f ]; then
+      mode=16804
+    fi
+    cat > $(dirname $f)/.$(basename $f).attr << EOF
+mode:$mode
+created:$(date +"%s")
+EOF
+  fi
+done
+
+printf "=> Marking programs executable\n"
+for f in $(ls build/bin); do
+  if [ "${f:1:1}" != "." ]; then
+    cat > build/bin/.$f.attr << EOF
+mode:33261
+created:$(date +"%s")
+EOF
+  fi
+done
+
 printf "=> Done!\n"
