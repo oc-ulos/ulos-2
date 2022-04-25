@@ -8,7 +8,7 @@ printf "=> Removing old build files...\n"
 rm -rf build cynosure-2/kernel.lua
 
 printf "=> Creating base directory structure\n"
-mkdir -p build/{boot,bin,lib,etc/ulos,usr/lib}
+mkdir -p build/{boot,bin,lib,etc/ulos,usr/lib,usr/bin}
 
 printf "=> Assembling Cynosure 2\n"
 cd cynosure-2
@@ -30,6 +30,8 @@ cp reknit/init.lua build/bin/
 cp -r liblua/src/ build/lib/lua
 mv build/lib/{lua/,}package.lua
 cp coreutils/src/* build/bin/
+# compatibility with scripts starting with #!/usr/bin/env
+mv build/bin/env build/usr/bin/env
 cp -r luash/{bin,lib,etc} build/
 cp -r liblua/lang build/etc/
 
@@ -51,6 +53,15 @@ printf "=> Marking programs executable\n"
 for f in $(ls build/bin); do
   if [ "${f:1:1}" != "." ]; then
     cat > build/bin/.$f.attr << EOF
+mode:33261
+created:$(date +"%s")
+EOF
+  fi
+done
+
+for f in $(ls build/usr/bin); do
+  if [ "${f:1:1}" != "." ]; then
+    cat > build/usr/bin/.$f.attr << EOF
 mode:33261
 created:$(date +"%s")
 EOF
