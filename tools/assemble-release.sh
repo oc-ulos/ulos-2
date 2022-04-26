@@ -33,6 +33,7 @@ cp coreutils/src/* build/bin/
 # compatibility with scripts starting with #!/usr/bin/env
 mv build/bin/env build/usr/bin/env
 cp -r luash/{bin,lib,etc} build/
+#cp -r vbls/{bin,lib,etc} build/
 cp -r liblua/lang build/etc/
 
 printf "=> Setting file permissions\n"

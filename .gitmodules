@@ -19,3 +19,6 @@
 [submodule "luash"]
 	path = luash
 	url = git@github.com:oc-ulos/luash
+[submodule "vbls"]
+	path = vbls
+	url = git@github.com:oc-ulos/vbls
