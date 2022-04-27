@@ -13,6 +13,7 @@ mkdir -p build/{boot,bin,lib,etc/ulos,usr/lib,usr/bin}
 export OS="ulos2"
 
 printf "=> Assembling Cynosure 2\n"
+cp config/kconfig cynosure-2/.config
 cd cynosure-2
 lua scripts/build.lua | tail -n 1
 cd ..
