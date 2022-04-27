@@ -70,4 +70,16 @@ EOF
   fi
 done
 
+if [ "$1" = "cpio" ]; then
+  cpio=$(command -v cpio)
+  if ! [ "$cpio" ]; then
+    printf "=> cpio utility not found - cannot continue\n"
+    exit 1
+  fi
+  printf "=> Assembling release CPIO\n"
+  cd build
+  find . -type f | $cpio -o > ../ulos2.cpio
+  cd ..
+fi
+
 printf "=> Done!\n"
