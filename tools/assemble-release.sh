@@ -10,6 +10,8 @@ rm -rf build cynosure-2/kernel.lua
 printf "=> Creating base directory structure\n"
 mkdir -p build/{boot,bin,lib,etc/ulos,usr/lib,usr/bin}
 
+export OS="ulos2"
+
 printf "=> Assembling Cynosure 2\n"
 cd cynosure-2
 lua scripts/build.lua | tail -n 1
@@ -23,8 +25,7 @@ cd ..
 printf "=> Copying in files\n"
 cp cldr/cldr.lua build/init.lua
 cp config/cldr.cfg build/boot/cldr.cfg
-cp config/{inittab,fstab,os-release} build/etc/
-cp config/profile.lua build/etc/
+cp config/{inittab,fstab,os-release,passwd,profile.lua} build/etc/
 cp cynosure-2/kernel.lua build/boot/cynosure.lua
 cp reknit/init.lua build/bin/
 cp -r liblua/src/ build/lib/lua
@@ -32,7 +33,7 @@ mv build/lib/{lua/,}package.lua
 cp coreutils/src/* build/bin/
 # compatibility with scripts starting with #!/usr/bin/env
 mv build/bin/env build/usr/bin/env
-cp -r luash/{bin,lib,etc} build/
+#cp -r luash/{bin,lib,etc} build/
 #cp -r vbls/{bin,lib,etc} build/
 cp -r liblua/lang build/etc/
 
