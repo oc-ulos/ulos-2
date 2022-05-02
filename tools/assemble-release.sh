@@ -4,8 +4,10 @@
 # do this from within ULOS itself. Because self-hosting is
 # cool :)
 
+set -e
+
 printf "=> Removing old build files...\n"
-rm -rf build cynosure-2/kernel.lua
+rm -rf build cynosure-2/kernel.lua /tmp/cynosure2buildoutput
 
 printf "=> Creating base directory structure\n"
 mkdir -p build/{boot,bin,lib,etc/ulos,usr/lib,usr/bin}
@@ -15,12 +17,12 @@ export OS="ulos2"
 printf "=> Assembling Cynosure 2\n"
 cp config/kconfig cynosure-2/.config
 cd cynosure-2
-lua scripts/build.lua | tail -n 1
+lua scripts/build.lua
 cd ..
 
 printf "=> Assembling the Cynosure Loader\n"
 cd cldr
-lua scripts/preproc.lua src/main.lua cldr.lua | tail -n 1
+lua scripts/preproc.lua src/main.lua cldr.lua
 cd ..
 
 printf "=> Copying in files\n"
