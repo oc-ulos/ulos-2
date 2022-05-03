@@ -22,3 +22,6 @@
 [submodule "vbls"]
 	path = vbls
 	url = git@github.com:oc-ulos/vbls
+[submodule "manpages"]
+	path = manpages
+	url = git@github.com:oc-ulos/manpages
