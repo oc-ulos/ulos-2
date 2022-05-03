@@ -28,7 +28,7 @@ cd ..
 printf "=> Copying in files\n"
 cp cldr/cldr.lua build/init.lua
 cp config/cldr.cfg build/boot/cldr.cfg
-cp config/{inittab,fstab,os-release,passwd,group,profile.lua} build/etc/
+cp config/{inittab,fstab,os-release,passwd,group,profile} build/etc/
 cp cynosure-2/kernel.lua build/boot/cynosure.lua
 cp reknit/init.lua build/bin/
 cp -r liblua/src/ build/lib/lua
