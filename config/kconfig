@@ -74,7 +74,6 @@ NET_ENABLE=n
 DEFAULT_HOSTNAME=localhost
 NET_HTTP=n
 NET_TCP=n
-NET_CFTP=n
 NET_MTEL=n
 NET_GERT=n
 # miscellaneous options
