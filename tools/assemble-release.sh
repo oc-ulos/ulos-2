@@ -39,6 +39,7 @@ mv build/bin/env build/usr/bin/env
 #cp -r luash/{bin,lib,etc} build/
 cp vbls/src/vbls.lua build/bin/sh.lua
 cp -r liblua/lang build/etc/
+mkdir -p build/root
 
 printf "=> Setting file permissions\n"
 for f in $(find build); do

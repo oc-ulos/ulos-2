@@ -5,3 +5,5 @@ if equals $USER root then
 else
   set PS1 '\e[92m\u\e[39m: \e[94m\w\e[39m$ '
 end
+
+alias reboot 'poweroff --reboot'
