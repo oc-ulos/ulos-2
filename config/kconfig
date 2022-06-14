@@ -5,7 +5,7 @@
 # within the kernel itself.  Components not enabled here are still
 # accessible through /dev/components if that is enabled, just
 # without the special features these options may provide.
-# * these do not actually do anything at this time.
+# * most of these do not actually do anything at this time.
 COMPONENT_3DPRINTER=n
 COMPONENT_ACCESSPOINT=n
 COMPONENT_CHUNKLOADER=n
@@ -78,9 +78,9 @@ NET_MTEL=n
 NET_GERT=n
 # miscellaneous options
 TTY_ENABLE_GPU=y
-# Whether to enable the bit32 compatibility layer.  The resulting kernel
-# requires Lua 5.3.
-BIT32=y
+# Whether to enable the bit32 compatibility layer.  If this is disabled, the
+# resulting kernel cannot run Lua 5.2 programs.
+BIT32=n
 BUFFER_SIZE=1024
 # When available free memory goes below this threshold, the kernel's
 # automated garbage collection code will fire.
