@@ -74,6 +74,12 @@ EOF
   fi
 done
 
+# make `passwd` setuid
+cat > build/bin/.passwd.lua.attr << EOF
+mode:35309
+created:$(date +"%s")
+EOF
+
 if [ "$1" = "cpio" ]; then
   cpio=$(command -v cpio)
   if ! [ "$cpio" ]; then
