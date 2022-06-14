@@ -85,4 +85,8 @@ if [ "$1" = "cpio" ]; then
   cd ..
 fi
 
+if [ "$1" = "ocvm" ]; then
+  ocvm ..
+fi
+
 printf "=> Done!\n"
