@@ -1,6 +1,6 @@
-# ULOS 2
+# ![logo](./ulos2-logo.png) ULOS 2
 
-Home of ULOS 2 for [OpenComputers]().
+Home of ULOS 2 for [OpenComputers](curseforge.com/minecraft/mc-mods/opencomputers).
 
 We recommend running ULOS 2 under [the latest CI build of OpenComputers](https://ci.cil.li/job/OpenComputers-MC1.12/) ([Guide](https://www.youtube.com/watch?v=F3IjiOnIpJM)).  Because Minecraft 1.12.2 ships with a horribly outdated build of Java 8, you may need to [upgrade to a newer build](https://www.youtube.com/watch?v=fZ2QIarg_c8) for certain networking features to function.
 
@@ -14,11 +14,11 @@ ULOS 2 is also even more modular than ULOS 1 - each component is split into its 
 
 This repository's submodule configuration assumes you have registered an SSH key with GitHub.  If you have not done so you will not be able to clone the repository.
 
-You will need LuaPosix to build Cynosure 2 and CLDR 2.  Without these the build will fail.
+You will need LuaPosix to build Cynosure 2 and CLDR 2.
 
 Run `tools/setup.sh` to switch all submodules to their main branches after initial cloning.  Run `tools/pull-repos.sh` to pull all repo updates.
 
-Run `tools/assemble-release.sh` from the repository root to generate a ULOS 2 system in `build/`.  Run `tools/assemble-release.sh cpio` to additionally generate a CPIO with the relevant.
+Run `tools/assemble-release.sh` from the repository root to generate a ULOS 2 system in `build/`.  Run `tools/assemble-release.sh cpio` to additionally generate a release CPIO.
 
 ## Contact us
 
