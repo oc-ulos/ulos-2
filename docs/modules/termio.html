@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>ULOS 2 Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ULOS 2</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/syscalls.html">syscalls</a></li>
+  <li><a href="../modules/argcompat.html">argcompat</a></li>
+  <li><a href="../modules/copier.html">copier</a></li>
+  <li><a href="../modules/getopt.html">getopt</a></li>
+  <li><a href="../modules/i18n.html">i18n</a></li>
+  <li><a href="../modules/permissions.html">permissions</a></li>
+  <li><a href="../modules/readline.html">readline</a></li>
+  <li><a href="../modules/sizes.html">sizes</a></li>
+  <li><strong>termio</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>termio</code></h1>
+<p>Terminal I/O
+ This module provides convenient wrappers over VT100 functionality.</p>
+<p>  It supports use of handlers to allow functionality across a wide variety of terminal emulators.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#getCursor">getCursor ()</a></td>
+	<td class="summary">Get the current cursor position.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getTermSize">getTermSize ()</a></td>
+	<td class="summary">Get the size of the terminal.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cursorVisible">cursorVisible (vis)</a></td>
+	<td class="summary">Set whether the cursor is visible.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#readKey">readKey ()</a></td>
+	<td class="summary">Read a keypress from standard input.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#keyflags">keyflags</a></td>
+	<td class="summary">Flags returned by <a href="../modules/termio.html#readKey">readKey</a>.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "getCursor"></a>
+    <strong>getCursor ()</strong>
+    </dt>
+    <dd>
+    Get the current cursor position.
+ If this cannot be determined, the result will be <code>1, 1</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Cursor X position</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Cursor Y position</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getTermSize"></a>
+    <strong>getTermSize ()</strong>
+    </dt>
+    <dd>
+    Get the size of the terminal.
+ If this cannot be determined, the result will be <code>1, 1</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Terminal width</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Terminal height</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "cursorVisible"></a>
+    <strong>cursorVisible (vis)</strong>
+    </dt>
+    <dd>
+    Set whether the cursor is visible.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vis</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether the cursor is visible
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "readKey"></a>
+    <strong>readKey ()</strong>
+    </dt>
+    <dd>
+    Read a keypress from standard input.
+ This function will read a single keypress (NOT a single character) and return a symbolic name for it.  Characters within the ASCII range are left alone.  Escape sequences representing e.g. arrow keys are recognized and returned as <code>left</code>, <code>right</code>, <code>up</code>, or <code>down</code>.  <code>ctrl-[Key]</code> sequences are also supported, and returned with the <code>ctrl</code> flag set to <code>true</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The character that was read</li>
+        <li>
+        Additional flags</li>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "keyflags"></a>
+    <strong>keyflags</strong>
+    </dt>
+    <dd>
+    Flags returned by <a href="../modules/termio.html#readKey">readKey</a>.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">ctrl</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether the Control key was pressed
+        </li>
+        <li><span class="parameter">alt</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether the Alt (Option) key was pressed
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-06-14 01:49:09 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

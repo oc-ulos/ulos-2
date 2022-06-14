@@ -1,0 +1,1674 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>ULOS 2 Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ULOS 2</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><strong>syscalls</strong></li>
+  <li><a href="../modules/argcompat.html">argcompat</a></li>
+  <li><a href="../modules/copier.html">copier</a></li>
+  <li><a href="../modules/getopt.html">getopt</a></li>
+  <li><a href="../modules/i18n.html">i18n</a></li>
+  <li><a href="../modules/permissions.html">permissions</a></li>
+  <li><a href="../modules/readline.html">readline</a></li>
+  <li><a href="../modules/sizes.html">sizes</a></li>
+  <li><a href="../modules/termio.html">termio</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>syscalls</code></h1>
+<p>This page contains all the system calls available under Cynosure 2.</p>
+<p> All system calls return <code>nil</code> and an errno value on failure.
+ System calls are made using <a href="https://www.lua.org/manual/5.1/manual.html#pdf-coroutine.yield">coroutine.yield</a> like this: <code>coroutine.yield(&quot;syscall&quot;, &quot;isatty&quot;, 2)</code>.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#open">open (file, mode)</a></td>
+	<td class="summary">Open a file with the given mode.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#request">request (path)</a></td>
+	<td class="summary">Request a given network path.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ioctl">ioctl (fd, operation, ...)</a></td>
+	<td class="summary">Perform some operation on a file descriptor.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#read">read (fd, fmt)</a></td>
+	<td class="summary">Read some data from a file descriptor.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#write">write (fd, data)</a></td>
+	<td class="summary">Write some data to a file descriptor.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#seek">seek (fd, whence, number)</a></td>
+	<td class="summary">Seek to some position in a given file relative to the start position.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#flush">flush (fd)</a></td>
+	<td class="summary">Flush read and write buffers.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#opendir">opendir (file)</a></td>
+	<td class="summary">Open a directory.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#readdir">readdir (fd)</a></td>
+	<td class="summary">Read from a directory.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#close">close (fd)</a></td>
+	<td class="summary">Close a file or directory descriptor.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#isatty">isatty (fd)</a></td>
+	<td class="summary">Check if a file descriptor refers to a TTY.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#dup">dup (fd)</a></td>
+	<td class="summary">Duplicate a file descriptor.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#dup2">dup2 (fd, nfd)</a></td>
+	<td class="summary">Duplicate a file descriptor to the given new one.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#mkdir">mkdir (path, mode)</a></td>
+	<td class="summary">Create a directory.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#stat">stat (path)</a></td>
+	<td class="summary">Returns some information about a file.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#link">link (source, dest)</a></td>
+	<td class="summary">Create a hard link.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#unlink">unlink (path)</a></td>
+	<td class="summary">Remove a link.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#chmod">chmod (path, mode)</a></td>
+	<td class="summary">Change file permissions.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#chown">chown (path, uid, gid)</a></td>
+	<td class="summary">Change a file's owner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#mount">mount (node, path)</a></td>
+	<td class="summary">Mount a filesystem.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#fork">fork (func)</a></td>
+	<td class="summary">Create a new process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#execve">execve (path, args[, env])</a></td>
+	<td class="summary">Replace the current process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#wait">wait (pid)</a></td>
+	<td class="summary">Wait for a process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#exit">exit (status)</a></td>
+	<td class="summary">Terminate the current process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getcwd">getcwd ()</a></td>
+	<td class="summary">Get the current working directory.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#chdir">chdir (path)</a></td>
+	<td class="summary">Set the current process's working directory.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setuid">setuid (uid)</a></td>
+	<td class="summary">Modify the current process's identity.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#seteuid">seteuid (uid)</a></td>
+	<td class="summary">Modify the current process's identity.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getuid">getuid ()</a></td>
+	<td class="summary">Get the current process's user ID.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#geteuid">geteuid ()</a></td>
+	<td class="summary">Get the current process's effective user ID.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setgid">setgid (uid)</a></td>
+	<td class="summary">Modify the current process's identity.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setegid">setegid (uid)</a></td>
+	<td class="summary">Modify the current process's identity.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getgid">getgid ()</a></td>
+	<td class="summary">Get the current process's group ID.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getegid">getegid ()</a></td>
+	<td class="summary">Get the current process's effective group ID.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getpid">getpid ()</a></td>
+	<td class="summary">Get the ID of the current process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getpid">getpid ()</a></td>
+	<td class="summary">Get the parent PID of the current process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setsid">setsid ()</a></td>
+	<td class="summary">Set the session ID of the current process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getsid">getsid ([pid])</a></td>
+	<td class="summary">Get the session ID of a process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setpgrp">setpgrp (pid, pg)</a></td>
+	<td class="summary">Set a process's process group.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getpgrp">getpgrp ([pid])</a></td>
+	<td class="summary">Get the process group of a process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sigaction">sigaction (name, function)</a></td>
+	<td class="summary">Set a handler for some POSIX signal.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#kill">kill (pid, name)</a></td>
+	<td class="summary">Signal a process.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#gethostname">gethostname ()</a></td>
+	<td class="summary">Get the system hostname.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sethostname">sethostname (name)</a></td>
+	<td class="summary">Set the system hostname.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#environ">environ ()</a></td>
+	<td class="summary">Get the process environment.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#umask">umask (num)</a></td>
+	<td class="summary">Set the umask.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pipe">pipe ()</a></td>
+	<td class="summary">Create a pipe.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#reboot">reboot (cmd)</a></td>
+	<td class="summary">Restart the system.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#uname">uname ()</a></td>
+	<td class="summary">Return some system information.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#uptime">uptime ()</a></td>
+	<td class="summary">Return the system uptime.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#dirent">dirent</a></td>
+	<td class="summary">Returned by <a href="../modules/syscalls.html#readdir">readdir</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#statx">statx</a></td>
+	<td class="summary">The information returned by <a href="../modules/syscalls.html#stat">stat</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#unameinfo">unameinfo</a></td>
+	<td class="summary">Table containing system information.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "open"></a>
+    <strong>open (file, mode)</strong>
+    </dt>
+    <dd>
+    Open a file with the given mode.
+ Returns a file descriptor.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The file to open
+        </li>
+        <li><span class="parameter">mode</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The mode, similar to those given to <a href="https://www.lua.org/manual/5.1/manual.html#5.7">io</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The file descriptor
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "request"></a>
+    <strong>request (path)</strong>
+    </dt>
+    <dd>
+    Request a given network path.
+ Uses any protocol supported by the kernel.  Returns a file descriptor.
+ Paths must be bang paths, i.e. <code>https!example!com!404.html</code> or <code>mtel!upm!packages!list</code>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The bang path to request
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The file descriptor
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ioctl"></a>
+    <strong>ioctl (fd, operation, ...)</strong>
+    </dt>
+    <dd>
+    Perform some operation on a file descriptor.
+ Not all file descriptors support all ioctls.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The file descriptor
+        </li>
+        <li><span class="parameter">operation</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The operation to perform
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">any</span></span>
+         Any remaining arguments
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "read"></a>
+    <strong>read (fd, fmt)</strong>
+    </dt>
+    <dd>
+    Read some data from a file descriptor.
+ Returns the data that was read.  Any format valid for <a href="https://www.lua.org/manual/5.1/manual.html#5.7">io</a> is valid when passed to this function.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The file descriptor
+        </li>
+        <li><span class="parameter">fmt</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">number</span></span>
+         The format to use when reading
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The data that was read
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "write"></a>
+    <strong>write (fd, data)</strong>
+    </dt>
+    <dd>
+    Write some data to a file descriptor.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The file descriptor
+        </li>
+        <li><span class="parameter">data</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The data to write
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the operation succeeded
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "seek"></a>
+    <strong>seek (fd, whence, number)</strong>
+    </dt>
+    <dd>
+    Seek to some position in a given file relative to the start position.
+ Returns the new position.  Not all file descriptors support this.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The file descriptor
+        </li>
+        <li><span class="parameter">whence</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Where to start
+        </li>
+        <li><span class="parameter">number</span>
+            <span class="types"><span class="type">offset</span></span>
+        |nil The offset to seek
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The new position
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "flush"></a>
+    <strong>flush (fd)</strong>
+    </dt>
+    <dd>
+    Flush read and write buffers.
+ Only does something on some file descriptors, and then only if the file descriptor is buffered.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The file descriptor
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "opendir"></a>
+    <strong>opendir (file)</strong>
+    </dt>
+    <dd>
+    Open a directory.
+ Opens the given directory for reading and returns a directory descriptor.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The directory to open
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The resulting directory descriptor
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "readdir"></a>
+    <strong>readdir (fd)</strong>
+    </dt>
+    <dd>
+    Read from a directory.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The directory descriptor
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        <a href="../modules/syscalls.html#dirent">dirent</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "close"></a>
+    <strong>close (fd)</strong>
+    </dt>
+    <dd>
+    Close a file or directory descriptor.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The file descriptor
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "isatty"></a>
+    <strong>isatty (fd)</strong>
+    </dt>
+    <dd>
+    Check if a file descriptor refers to a TTY.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The file descriptor
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the file descriptor is a TTY
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "dup"></a>
+    <strong>dup (fd)</strong>
+    </dt>
+    <dd>
+    Duplicate a file descriptor.
+ Returns the new file descriptor.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The descriptor to duplicate
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The new file descriptor
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "dup2"></a>
+    <strong>dup2 (fd, nfd)</strong>
+    </dt>
+    <dd>
+    Duplicate a file descriptor to the given new one.
+ Returns the new file descriptor.  If the provided new file descriptor exists and is open, it will be silently closed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fd</span>
+            <span class="types"><span class="type">number</span></span>
+         The file descriptor to duplicate
+        </li>
+        <li><span class="parameter">nfd</span>
+            <span class="types"><span class="type">number</span></span>
+         The new file descriptor
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The new file descriptor
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "mkdir"></a>
+    <strong>mkdir (path, mode)</strong>
+    </dt>
+    <dd>
+    Create a directory.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The directory to create
+        </li>
+        <li><span class="parameter">mode</span>
+            <span class="types"><span class="type">number</span></span>
+         The permissions to set on it
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "stat"></a>
+    <strong>stat (path)</strong>
+    </dt>
+    <dd>
+    Returns some information about a file.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The file to query
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The information
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "link"></a>
+    <strong>link (source, dest)</strong>
+    </dt>
+    <dd>
+    Create a hard link.
+ Not supported by any filesystems at this time.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">source</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The source file
+        </li>
+        <li><span class="parameter">dest</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The location of the new link
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "unlink"></a>
+    <strong>unlink (path)</strong>
+    </dt>
+    <dd>
+    Remove a link.
+ Removes the file when its link count reaches 0.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The file to unlink
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "chmod"></a>
+    <strong>chmod (path, mode)</strong>
+    </dt>
+    <dd>
+    Change file permissions.
+ Takes a standard POSIX file mode and applies the permissions to the given file.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The file to modify
+        </li>
+        <li><span class="parameter">mode</span>
+            <span class="types"><span class="type">number</span></span>
+         The mode to set
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "chown"></a>
+    <strong>chown (path, uid, gid)</strong>
+    </dt>
+    <dd>
+    Change a file's owner.
+ Changes the <code>uid</code> and <code>gid</code> fields for the given file.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The file to modify
+        </li>
+        <li><span class="parameter">uid</span>
+            <span class="types"><span class="type">number</span></span>
+         The new owning UID
+        </li>
+        <li><span class="parameter">gid</span>
+            <span class="types"><span class="type">number</span></span>
+         The new owning GID
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "mount"></a>
+    <strong>mount (node, path)</strong>
+    </dt>
+    <dd>
+    Mount a filesystem.
+ The given directory must exist or the operation will fail.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The filesystem node
+        </li>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The path at which to mount it
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "fork"></a>
+    <strong>fork (func)</strong>
+    </dt>
+    <dd>
+    Create a new process.
+ This function creates a new process from the given function.  Its behavior is nonstandard due to Lua limitations.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">func</span>
+            <span class="types"><span class="type">function</span></span>
+         The function to use
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The PID of the new process
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "execve"></a>
+    <strong>execve (path, args[, env])</strong>
+    </dt>
+    <dd>
+    Replace the current process.
+ Takes the path to an executable file and loads it as a replacement for the current process.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The executable to load
+        </li>
+        <li><span class="parameter">args</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Any arguments to pass
+        </li>
+        <li><span class="parameter">env</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Environment variables, if any
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "wait"></a>
+    <strong>wait (pid)</strong>
+    </dt>
+    <dd>
+    Wait for a process.
+ If a process has exited, it will not be removed until <a href="../modules/syscalls.html#wait">wait</a> is called on it.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pid</span>
+            <span class="types"><span class="type">number</span></span>
+         The process ID for which to wait
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "exit"></a>
+    <strong>exit (status)</strong>
+    </dt>
+    <dd>
+    Terminate the current process.
+ Takes an exit status, which is returned to the parent from a call to <a href="../modules/syscalls.html#wait">wait</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">status</span>
+            <span class="types"><span class="type">number</span></span>
+         The exit status to use
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getcwd"></a>
+    <strong>getcwd ()</strong>
+    </dt>
+    <dd>
+    Get the current working directory.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The current process's working directory
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "chdir"></a>
+    <strong>chdir (path)</strong>
+    </dt>
+    <dd>
+    Set the current process's working directory.
+ Does nothing if the given path does not exist.  The given path may be relative.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The new working directory
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setuid"></a>
+    <strong>setuid (uid)</strong>
+    </dt>
+    <dd>
+    Modify the current process's identity.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">uid</span>
+            <span class="types"><span class="type">number</span></span>
+         The new user ID
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="http://www.kernel.org/doc/man-pages/online/pages/man2/setuid.2.html">setuid(2)</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "seteuid"></a>
+    <strong>seteuid (uid)</strong>
+    </dt>
+    <dd>
+    Modify the current process's identity.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">uid</span>
+            <span class="types"><span class="type">number</span></span>
+         The new user ID
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="http://www.kernel.org/doc/man-pages/online/pages/man2/seteuid.2.html">seteuid(2)</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "getuid"></a>
+    <strong>getuid ()</strong>
+    </dt>
+    <dd>
+    Get the current process's user ID.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The user ID
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "geteuid"></a>
+    <strong>geteuid ()</strong>
+    </dt>
+    <dd>
+    Get the current process's effective user ID.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The effective user ID
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setgid"></a>
+    <strong>setgid (uid)</strong>
+    </dt>
+    <dd>
+    Modify the current process's identity.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">uid</span>
+            <span class="types"><span class="type">number</span></span>
+         The new group ID
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="http://www.kernel.org/doc/man-pages/online/pages/man2/setgid.2.html">setgid(2)</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "setegid"></a>
+    <strong>setegid (uid)</strong>
+    </dt>
+    <dd>
+    Modify the current process's identity.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">uid</span>
+            <span class="types"><span class="type">number</span></span>
+         The new group ID
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="http://www.kernel.org/doc/man-pages/online/pages/man2/setegid.2.html">setegid(2)</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "getgid"></a>
+    <strong>getgid ()</strong>
+    </dt>
+    <dd>
+    Get the current process's group ID.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The group ID
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getegid"></a>
+    <strong>getegid ()</strong>
+    </dt>
+    <dd>
+    Get the current process's effective group ID.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The effective group ID
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getpid"></a>
+    <strong>getpid ()</strong>
+    </dt>
+    <dd>
+    Get the ID of the current process.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The process's ID
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getpid"></a>
+    <strong>getpid ()</strong>
+    </dt>
+    <dd>
+    Get the parent PID of the current process.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The parent PID
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setsid"></a>
+    <strong>setsid ()</strong>
+    </dt>
+    <dd>
+    Set the session ID of the current process.
+ Does not work if the current process is the leader of its process group.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The new session ID
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getsid"></a>
+    <strong>getsid ([pid])</strong>
+    </dt>
+    <dd>
+    Get the session ID of a process.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pid</span>
+            <span class="types"><span class="type">number</span></span>
+         The process to query
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The session ID of the process
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setpgrp"></a>
+    <strong>setpgrp (pid, pg)</strong>
+    </dt>
+    <dd>
+    Set a process's process group.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pid</span>
+            <span class="types"><span class="type">number</span></span>
+         The process to modify
+        </li>
+        <li><span class="parameter">pg</span>
+            <span class="types"><span class="type">number</span></span>
+         The process group ID
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getpgrp"></a>
+    <strong>getpgrp ([pid])</strong>
+    </dt>
+    <dd>
+    Get the process group of a process.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pid</span>
+            <span class="types"><span class="type">number</span></span>
+         The process ID to query
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The process group ID of that process
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sigaction"></a>
+    <strong>sigaction (name, function)</strong>
+    </dt>
+    <dd>
+    Set a handler for some POSIX signal.
+ Signals are represented by their constant names rather than by numbers.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The signal name
+        </li>
+        <li><span class="parameter">function</span>
+            <span class="types"><span class="type">handler</span></span>
+         The handler function to set
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "kill"></a>
+    <strong>kill (pid, name)</strong>
+    </dt>
+    <dd>
+    Signal a process.
+ Differs from the standard slightly: SIGEXIST, rather than 0, is used to check if a process exists - since signals don't have numeric IDs under Cynosure 2.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pid</span>
+            <span class="types"><span class="type">number</span></span>
+         The process to kill
+        </li>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The signal to send
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "gethostname"></a>
+    <strong>gethostname ()</strong>
+    </dt>
+    <dd>
+    Get the system hostname.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The hostname
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sethostname"></a>
+    <strong>sethostname (name)</strong>
+    </dt>
+    <dd>
+    Set the system hostname.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The new hostname
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "environ"></a>
+    <strong>environ ()</strong>
+    </dt>
+    <dd>
+    Get the process environment.
+ Returns the current process's environment table.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        The environment
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "umask"></a>
+    <strong>umask (num)</strong>
+    </dt>
+    <dd>
+    Set the umask.
+ Only uses the permissions bits.  Returns the previous umask.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num</span>
+            <span class="types"><span class="type">number</span></span>
+         The new umask
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The old umask
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pipe"></a>
+    <strong>pipe ()</strong>
+    </dt>
+    <dd>
+    Create a pipe.
+ Returns a pair of file descriptors.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        The read end</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        The write end</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "reboot"></a>
+    <strong>reboot (cmd)</strong>
+    </dt>
+    <dd>
+    Restart the system.
+ Does not function unless the effective user ID is 0 (root).
+ The given action must be one of: <code>halt</code>, <code>poweroff</code>, <a href="../modules/syscalls.html#reboot">reboot</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">cmd</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The action to perform
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "uname"></a>
+    <strong>uname ()</strong>
+    </dt>
+    <dd>
+    Return some system information.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The system information
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "uptime"></a>
+    <strong>uptime ()</strong>
+    </dt>
+    <dd>
+    Return the system uptime.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The uptime
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "dirent"></a>
+    <strong>dirent</strong>
+    </dt>
+    <dd>
+    Returned by <a href="../modules/syscalls.html#readdir">readdir</a>.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">inode</span>
+            <span class="types"><span class="type">number</span></span>
+         The inode on which the file is stored
+        </li>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The name of the file
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "statx"></a>
+    <strong>statx</strong>
+    </dt>
+    <dd>
+    The information returned by <a href="../modules/syscalls.html#stat">stat</a>.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">ino</span>
+            <span class="types"><span class="type">number</span></span>
+         The inode on which the file is located
+        </li>
+        <li><span class="parameter">mode</span>
+            <span class="types"><span class="type">number</span></span>
+         The POSIX file mode (type and permissions)
+        </li>
+        <li><span class="parameter">nlink</span>
+            <span class="types"><span class="type">number</span></span>
+         How many times the file's inode is referenced (hard linked)
+        </li>
+        <li><span class="parameter">uid</span>
+            <span class="types"><span class="type">number</span></span>
+         The user ID of the file's owner
+        </li>
+        <li><span class="parameter">gid</span>
+            <span class="types"><span class="type">number</span></span>
+         The group ID of the file's owner
+        </li>
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">number</span></span>
+         The file size in bytes
+        </li>
+        <li><span class="parameter">blksize</span>
+            <span class="types"><span class="type">number</span></span>
+         The block size used for file I/O
+        </li>
+        <li><span class="parameter">atime</span>
+            <span class="types"><span class="type">number</span></span>
+         File access time
+        </li>
+        <li><span class="parameter">ctime</span>
+            <span class="types"><span class="type">number</span></span>
+         File creation time
+        </li>
+        <li><span class="parameter">mtime</span>
+            <span class="types"><span class="type">number</span></span>
+         File modification time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "unameinfo"></a>
+    <strong>unameinfo</strong>
+    </dt>
+    <dd>
+    Table containing system information.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">sysname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The system name
+        </li>
+        <li><span class="parameter">nodename</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The nodename (hostname)
+        </li>
+        <li><span class="parameter">release</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The kernel release
+        </li>
+        <li><span class="parameter">version</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The day this kernel was built
+        </li>
+        <li><span class="parameter">machine</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The machine the kernel is running on
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-06-14 01:49:09 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>ULOS 2 Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ULOS 2</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/syscalls.html">syscalls</a></li>
+  <li><a href="../modules/argcompat.html">argcompat</a></li>
+  <li><a href="../modules/copier.html">copier</a></li>
+  <li><a href="../modules/getopt.html">getopt</a></li>
+  <li><a href="../modules/i18n.html">i18n</a></li>
+  <li><strong>permissions</strong></li>
+  <li><a href="../modules/readline.html">readline</a></li>
+  <li><a href="../modules/sizes.html">sizes</a></li>
+  <li><a href="../modules/termio.html">termio</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>permissions</code></h1>
+<p>Permissions
+ This module provides utilities for working with file permissions.</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#strtobmp">strtobmp (permstr)</a></td>
+	<td class="summary">Convert a string representation to a binary one.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#bmptostr">bmptostr (bitmap)</a></td>
+	<td class="summary">Convert a bitmap representation to a string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#has_permission">has_permission (mode, perm)</a></td>
+	<td class="summary">Check if a permission is set.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "strtobmp"></a>
+    <strong>strtobmp (permstr)</strong>
+    </dt>
+    <dd>
+    Convert a string representation to a binary one.
+ Takes a string in a form similar to that output by <code>ls</code>, and returns a number with the appropriate bits set.  The string must be exactly nine characters long and in the format <code>rwxrwxrwx</code>, where any <code>r</code>, <code>w</code>, or <code>x</code> may be replaced by a <code>-</code>.
+ For example, <code>rwxrw-r--</code>, <code>r-xr-xr-x</code>, and <code>rw--wx--w-</code> are all valid, but <code>rwrwrw</code> is not.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">permstr</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The string to process
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        A numerical representation of the input string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "bmptostr"></a>
+    <strong>bmptostr (bitmap)</strong>
+    </dt>
+    <dd>
+    Convert a bitmap representation to a string.
+ The bitmap must be in the same format as a POSIX file mode - the same as that returned by <a href="../modules/permissions.html#strtobmp">strtobmp</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">bitmap</span>
+            <span class="types"><span class="type">number</span></span>
+         The permissions to process
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        A string representation, in the same form as passed to <a href="../modules/permissions.html#strtobmp">strtobmp</a>.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "has_permission"></a>
+    <strong>has_permission (mode, perm)</strong>
+    </dt>
+    <dd>
+    Check if a permission is set.
+ Checks if the given permission string, when ANDed with the given <code>mode</code>, is exactly returned.  Relatively inflexible.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">mode</span>
+            <span class="types"><span class="type">number</span></span>
+         The file mode to check against
+        </li>
+        <li><span class="parameter">perm</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The permissions to check
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the given permission is set
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-06-14 01:49:09 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

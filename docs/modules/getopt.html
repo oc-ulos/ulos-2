@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>ULOS 2 Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ULOS 2</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/syscalls.html">syscalls</a></li>
+  <li><a href="../modules/argcompat.html">argcompat</a></li>
+  <li><a href="../modules/copier.html">copier</a></li>
+  <li><strong>getopt</strong></li>
+  <li><a href="../modules/i18n.html">i18n</a></li>
+  <li><a href="../modules/permissions.html">permissions</a></li>
+  <li><a href="../modules/readline.html">readline</a></li>
+  <li><a href="../modules/sizes.html">sizes</a></li>
+  <li><a href="../modules/termio.html">termio</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>getopt</code></h1>
+<p>Argument parsing
+ This module is loosely inspired by GNU getopt;  its interface is tailored to Lua rather than C, and it is less obtuse.</p>
+<p>  The code is taken from ULOS 1 and has been modified very slightly to work with ULOS 2.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#getopt">getopt (_opts, _args)</a></td>
+	<td class="summary">Process program arguments according to the given options.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#options">options</a></td>
+	<td class="summary">Options given to <a href="../modules/getopt.html#">getopt</a></td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "getopt"></a>
+    <strong>getopt (_opts, _args)</strong>
+    </dt>
+    <dd>
+    Process program arguments according to the given options.
+ Takes the given table of <a href="../modules/getopt.html#options">options</a>, and processes the given arguments accordingly.
+ The returned table of options will vary slightly depending whether the <code>can_repeat_opts</code> option is set.  If it is set, all values returned in the <code>opts</code> table will be tables containing an array of all the values given to that option over one or more occurrences of that option (possibly just one item).  Otherwise, the most recent occurrence of an option takes precedence and all values in <code>opts</code> are strings.  Keys in the returned <code>opts</code> table are always strings corresponding to the name of the option.
+ Option names should never begin with a <code>-</code> or <code>--</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_opts</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         The options to use
+        </li>
+        <li><span class="parameter">_args</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         The arguments to process
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        The arguments left over (<code>args</code>)</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        The provided options (<code>opts</code>)</li>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "options"></a>
+    <strong>options</strong>
+    </dt>
+    <dd>
+    Options given to <a href="../modules/getopt.html#">getopt</a>
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">options</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Key-value pairs of all possible options, where the key is the option name and the value is a boolean indicating whether that option takes an argument.  This is the only mandatory field.
+        </li>
+        <li><span class="parameter">help_message</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A help message that is written to the standard error stream when an error condition is reached.
+        </li>
+        <li><span class="parameter">exit_on_bad_opt</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether it is an error to find an invalid option (one not specified in the <a href="../modules/getopt.html#options">options</a> table).
+        </li>
+        <li><span class="parameter">finish_after_arg</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether to stop processing options after any non-option argument is reached.
+        </li>
+        <li><span class="parameter">can_repeat_opts</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether options may be repeated.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-06-14 01:49:09 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

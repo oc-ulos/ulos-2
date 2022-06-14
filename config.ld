@@ -12,6 +12,8 @@ project = "ULOS 2"
 title = "ULOS 2 Reference"
 format = "markdown"
 
+dir = "docs"
+
 convert_opt = false
 
 manual_url = "https://lua.org/manual/5.3/manual.html"
