@@ -25,3 +25,6 @@
 [submodule "manpages"]
 	path = manpages
 	url = git@github.com:oc-ulos/manpages
+[submodule "upt"]
+	path = upt
+	url = git@github.com:oc-ulos/upt
