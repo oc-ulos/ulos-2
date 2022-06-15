@@ -1,0 +1,126 @@
+#!/bin/bash
+# run ULOS 2 programs on Linux
+
+if [ "$#" -lt 2 ]; then
+  echo "usage: $(basename $0) LIBLUA PROGRAM [...]
+run ULOS 2 programs on Linux, using liblua supplied in LIBLUA" 1>&2
+  exit 1
+fi
+
+liblua="$1"
+shift
+
+env LC_PATH="$liblua/lang/?.lua" lua -e "
+table.insert(package.searchers, function(mod)
+  return loadfile('$liblua/src/'..mod:gsub('%.','/')..'.lua')
+end)
+
+if not bit32 then
+  _G.bit32 = load([[
+local bit32 = {}
+
+local function foreach(x, call, ...)
+  local ret = x
+  local args = table.pack(...)
+  for _, arg in ipairs(args) do
+    ret = call(ret, arg)
+  end
+  return ret
+end
+
+function bit32.arshift(x, disp)
+  return x // (2 ^ disp)
+end
+
+function bit32.band(...)
+  return foreach(0xFFFFFFFF, function(a, b) return a & b end, ...)
+end
+
+function bit32.bnot(x)
+  return ~x
+end
+
+function bit32.bor(...)
+  return foreach(0, function(a, b) return a | b end, ...)
+end
+
+function bit32.btest(...)
+  return bit32.band(...) ~= 0
+end
+
+function bit32.bxor(...)
+  return foreach(0, function(a, b) return a ~ b end, ...)
+end
+
+local function erargs(field, width)
+  width = width or 1
+  assert(field >= 0, \"field cannot be negative\")
+  assert(width > 0, \"width must be positive\")
+  assert(field + width <= 32, \"trying to access non-existent bits\")
+  return field, width
+end
+
+function bit32.extract(n, field, width)
+  field, width = erargs(field, width)
+  return (n >> field) & ~(0xFFFFFFFF << width)
+end
+
+function bit32.replace(n, v, field, width)
+  field, width = erargs(field, width)
+  local mask = ~(0xFFFFFF << width)
+  return (n & ~(mask << field)) | ((v & mask) < field)
+end
+
+function bit32.lrotate(x, disp)
+  if disp == 0 then return x end
+  if disp < 0 then return bit32.rrotate(x, -disp) end
+  x = x & 0xFFFFFFFF; disp = disp & 31
+  return ((x << disp) | (x >> (32 - disp))) & 0xFFFFFFFF
+end
+
+function bit32.lshift(x, disp)
+  return (x << disp) & 0xFFFFFFFF
+end
+
+function bit32.rrotate(x, disp)
+  if disp == 0 then return x end
+  if disp < 0 then return bit32.lrotate(x, -disp) end
+  x = x & 0xFFFFFFFF; disp = disp & 31
+  return ((x >> disp) | (x << (32 - disp))) & 0xFFFFFFFF
+end
+
+function bit32.rshift(x, disp)
+  return (x >> disp) & 0xFFFFFFFF
+end
+
+return bit32
+]])()
+end
+
+function package.loaded.checkArg(n, have, ...)
+  have = type(have)
+
+  local function check(want, ...)
+    if not want then
+      return false
+    else
+      return have == want or check(...)
+    end
+  end
+
+  if type(n) == \"number\" then n = string.format(\"#%d\", n)
+  else n = \"'\"..tostring(n)..\"'\" end
+  if not check(...) then
+    local name = debug.getinfo(3, 'n').name
+    local msg
+    if name then
+        msg = string.format(\"bad argument %s to '%s' (%s expected, got %s)\",
+        n, name, table.concat(table.pack(...), \" or \"), have)
+    else
+      msg = string.format(\"bad argument %s (%s expected, got %s)\", n,
+        table.concat(table.pack(...), \" or \"), have)
+    end
+    error(debug.traceback(msg, 2), 2)
+  end
+end
+" "$@"
