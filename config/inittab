@@ -1,2 +1,1 @@
 mnt:1:wait:/bin/readfstab.lua
-lgin:1:respawn:/bin/login.lua
