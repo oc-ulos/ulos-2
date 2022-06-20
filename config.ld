@@ -32,3 +32,7 @@ custom_see_handler('^([%w_]+)%((%d)%)$',function(name,section)
 end)
 
 kind_names = { topic = "Manual", module = "Libraries", script = "Commands" }
+
+examples = { 'examples' }
+
+backtick_references = false
