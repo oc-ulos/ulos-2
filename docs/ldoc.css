@@ -1,13 +1,11 @@
-/* BEGIN RESET
+@font-face {
+  font-family: unscii;
+  src: "https://viznut.fi/unscii/unscii-16.ttf";
+}
 
-Copyright (c) 2010, Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License:
-http://developer.yahoo.com/yui/license.html
-version: 2.8.2r1
-*/
 html {
-    color: #000;
-    background: #FFF;
+    color: #DDD;
+    background: #000;
 }
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td {
     margin: 0;
@@ -66,18 +64,18 @@ input,button,textarea,select {*font-size:100%;
 body {
     margin-left: 1em;
     margin-right: 1em;
-    font-family: arial, helvetica, geneva, sans-serif;
-    background-color: #ffffff; margin: 0px;
+    font-family: unscii, arial, helvetica, geneva, sans-serif;
+    background-color: #000; margin: 0px;
 }
 
-code, tt { font-family: monospace; font-size: 1.1em; }
-span.parameter { font-family:monospace; }
+code, tt { font-family: unscii, monospace; font-size: 1.1em; color: #AAA }
+span.parameter { font-family:unscii, monospace; }
 span.parameter:after { content:":"; }
 span.types:before { content:"("; }
 span.types:after { content:")"; }
 .type { font-weight: bold; font-style:italic }
 
-body, p, td, th { font-size: .95em; line-height: 1.2em;}
+body, p, td, th { font-size: 0.95em; line-height: 1.2em;}
 
 p, ul { margin: 10px 0 0 0px;}
 
@@ -90,12 +88,12 @@ h1 {
     margin: 20px 0 20px 0;
 }
 h2, h3, h4 { margin: 15px 0 10px 0; }
-h2 { font-size: 1.25em; }
+h2 { font-size: 1.35em; line-height: 2em; }
 h3 { font-size: 1.15em; }
 h4 { font-size: 1.06em; }
 
-a:link { font-weight: bold; color: #004080; text-decoration: none; }
-a:visited { font-weight: bold; color: #006699; text-decoration: none; }
+a:link { font-weight: bold; color: #00AAFF; text-decoration: none; }
+a:visited { font-weight: bold; color: #00AAFF; text-decoration: none; }
 a:link:hover { text-decoration: underline; }
 
 hr {
@@ -109,17 +107,17 @@ blockquote { margin-left: 3em; }
 ul { list-style-type: disc; }
 
 p.name {
-    font-family: "Andale Mono", monospace;
+    font-family: unscii, "Andale Mono", monospace;
     padding-top: 1em;
 }
 
 pre {
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(16, 16, 16);
     border: 1px solid #C0C0C0; /* silver */
     padding: 10px;
     margin: 10px 0 10px 0;
     overflow: auto;
-    font-family: "Andale Mono", monospace;
+    font-family: unscii, "Andale Mono", monospace;
 }
 
 pre.example {
@@ -132,13 +130,13 @@ table.index td { text-align: left; vertical-align: top; }
 #container {
     margin-left: 1em;
     margin-right: 1em;
-    background-color: #f0f0f0;
+    background-color: rgb(16, 16, 16);
 }
 
 #product {
     text-align: center;
     border-bottom: 1px solid #cccccc;
-    background-color: #ffffff;
+    background-color: #000;
 }
 
 #product big {
@@ -146,7 +144,7 @@ table.index td { text-align: left; vertical-align: top; }
 }
 
 #main {
-    background-color: #f0f0f0;
+    background-color: rgb(16, 16, 16);
     border-left: 2px solid #cccccc;
 }
 
@@ -154,15 +152,16 @@ table.index td { text-align: left; vertical-align: top; }
     float: left;
     width: 14em;
     vertical-align: top;
-    background-color: #f0f0f0;
+    background-color: #000;
     overflow: visible;
 }
 
 #navigation h2 {
-    background-color:#e7e7e7;
+    background-color: #000;
     font-size:1.1em;
-    color:#000000;
+    color:#DDD;
     text-align: left;
+    vertical-align: center;
     padding:0.2em;
     border-top:1px solid #dddddd;
     border-bottom:1px solid #dddddd;
@@ -191,14 +190,14 @@ table.index td { text-align: left; vertical-align: top; }
     width: 700px;
     border-left: 2px solid #cccccc;
     border-right: 2px solid #cccccc;
-    background-color: #ffffff;
+    background-color: #000;
 }
 
 #about {
     clear: both;
     padding: 5px;
     border-top: 2px solid #cccccc;
-    background-color: #ffffff;
+    background-color: #000;
 }
 
 @media print {
@@ -208,26 +207,26 @@ table.index td { text-align: left; vertical-align: top; }
     a { font-weight: bold; color: #004080; text-decoration: underline; }
 
     #main {
-        background-color: #ffffff;
+        background-color: #000;
         border-left: 0px;
     }
 
     #container {
         margin-left: 2%;
         margin-right: 2%;
-        background-color: #ffffff;
+        background-color: #000;
     }
 
     #content {
         padding: 1em;
-        background-color: #ffffff;
+        background-color: #000;
     }
 
     #navigation {
         display: none;
     }
     pre.example {
-        font-family: "Andale Mono", monospace;
+        font-family: unscii, "Andale Mono", monospace;
         font-size: 10pt;
         page-break-inside: avoid;
     }
@@ -245,7 +244,7 @@ table.module_list td {
     border-style: solid;
     border-color: #cccccc;
 }
-table.module_list td.name { background-color: #f0f0f0; min-width: 200px; }
+table.module_list td.name { background-color: #0f0f0f; min-width: 200px; }
 table.module_list td.summary { width: 100%; }
 
 
@@ -261,7 +260,7 @@ table.function_list td {
     border-style: solid;
     border-color: #cccccc;
 }
-table.function_list td.name { background-color: #f0f0f0; min-width: 200px; }
+table.function_list td.name { background-color: #0f0f0f; min-width: 200px; }
 table.function_list td.summary { width: 100%; }
 
 ul.nowrap {
@@ -281,7 +280,7 @@ ul ol { margin-top: 0px; }
 
 /* make the target distinct; helps when we're navigating to a function */
 a:target + * {
-  background-color: #FF9;
+  background-color: #0AF;
 }
 
 
