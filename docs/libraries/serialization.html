@@ -39,13 +39,13 @@
 <h2>Libraries</h2>
 <ul class="nowrap">
   <li><a href="../libraries/syscalls.html">syscalls</a></li>
-  <li><strong>argcompat</strong></li>
+  <li><a href="../libraries/argcompat.html">argcompat</a></li>
   <li><a href="../libraries/copier.html">copier</a></li>
   <li><a href="../libraries/getopt.html">getopt</a></li>
   <li><a href="../libraries/i18n.html">i18n</a></li>
   <li><a href="../libraries/permissions.html">permissions</a></li>
   <li><a href="../libraries/readline.html">readline</a></li>
-  <li><a href="../libraries/serialization.html">serialization</a></li>
+  <li><strong>serialization</strong></li>
   <li><a href="../libraries/sizes.html">sizes</a></li>
   <li><a href="../libraries/termio.html">termio</a></li>
 </ul>
@@ -58,16 +58,22 @@
 
 <div id="content">
 
-<h1>Module <code>argcompat</code></h1>
-<p>Hides argument passing differences.</p>
-<p> Cynosure 2 passes command arguments as a table, rather than as a set of separate arguments.  The Lua REPL included with ULOS 2 manages this; but this module is provided for programs that do not wish to incur the overhead of wrapping themselves in that REPL.</p>
+<h1>Module <code>serialization</code></h1>
+<p>Barebones table serialization and deserialization.</p>
+<p>
+
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#command">command (cmd[, ...])</a></td>
-	<td class="summary">Coerce arguments into a table.</td>
+	<td class="name" nowrap><a href="#serialize">serialize (tab)</a></td>
+	<td class="summary">Serialize a table.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#deserialize">deserialize (string)</a></td>
+	<td class="summary">Deserialize a table.</td>
 	</tr>
 </table>
 
@@ -79,23 +85,45 @@
 
     <dl class="function">
     <dt>
-    <a name = "command"></a>
-    <strong>command (cmd[, ...])</strong>
+    <a name = "serialize"></a>
+    <strong>serialize (tab)</strong>
     </dt>
     <dd>
-    Coerce arguments into a table.
- The first argument must always be the default name of the command.  If the second argument is a table then it is returned as-is;  otherwise, all arguments are placed into a table with index 0 being <code>cmd</code>.
+    Serialize a table.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">cmd</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         The default command name
+        <li><span class="parameter">tab</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table to serialize
         </li>
-        <li><span class="parameter">...</span>
-         Any remaining arguments
-         (<em>optional</em>)
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The serialized table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "deserialize"></a>
+    <strong>deserialize (string)</strong>
+    </dt>
+    <dd>
+    Deserialize a table.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+            <span class="types"><span class="type">str</span></span>
+         The text to try to deserialize
         </li>
     </ul>
 
@@ -103,15 +131,11 @@
     <ol>
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-        The arguments as a table
+        The deserialized table
     </ol>
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <pre class="example"><span class="keyword">local</span> argv = command(<span class="string">"ls"</span>, ...)</pre>
-    </ul>
 
 </dd>
 </dl>
