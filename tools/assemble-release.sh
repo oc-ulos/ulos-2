@@ -10,7 +10,7 @@ printf "=> Removing old build files...\n"
 rm -rf build cynosure-2/kernel.lua /tmp/cynosure2buildoutput
 
 printf "=> Creating base directory structure\n"
-mkdir -p build/{boot,bin,lib,etc/ulos,usr/lib,usr/bin}
+mkdir -p build/{boot,bin,lib,etc,usr/lib,usr/bin}
 
 export OS="ulos2"
 

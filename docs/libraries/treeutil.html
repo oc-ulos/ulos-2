@@ -40,7 +40,7 @@
 <ul class="nowrap">
   <li><a href="../libraries/syscalls.html">syscalls</a></li>
   <li><a href="../libraries/argcompat.html">argcompat</a></li>
-  <li><strong>copier</strong></li>
+  <li><a href="../libraries/copier.html">copier</a></li>
   <li><a href="../libraries/getopt.html">getopt</a></li>
   <li><a href="../libraries/i18n.html">i18n</a></li>
   <li><a href="../libraries/permissions.html">permissions</a></li>
@@ -48,7 +48,7 @@
   <li><a href="../libraries/serialization.html">serialization</a></li>
   <li><a href="../libraries/sizes.html">sizes</a></li>
   <li><a href="../libraries/termio.html">termio</a></li>
-  <li><a href="../libraries/treeutil.html">treeutil</a></li>
+  <li><strong>treeutil</strong></li>
 </ul>
 <h2>Examples</h2>
 <ul class="nowrap">
@@ -59,16 +59,18 @@
 
 <div id="content">
 
-<h1>Module <code>copier</code></h1>
-<p>A table copier.</p>
-<p> This module provides one function for obtaining a complete copy of a table.</p>
+<h1>Module <code>treeutil</code></h1>
+<p>File tree related utilities.</p>
+<p>
+
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#copy">copy (tab)</a></td>
-	<td class="summary">Create a complete copy of a table.</td>
+	<td class="name" nowrap><a href="#tree">tree (path[, modify[, foreach]])</a></td>
+	<td class="summary">Create a tree of file names.</td>
 	</tr>
 </table>
 
@@ -80,19 +82,29 @@
 
     <dl class="function">
     <dt>
-    <a name = "copy"></a>
-    <strong>copy (tab)</strong>
+    <a name = "tree"></a>
+    <strong>tree (path[, modify[, foreach]])</strong>
     </dt>
     <dd>
-    Create a complete copy of a table.
- Also copies metatables.  The implementation is from https://lua-users.org/wiki/CopyTable.
+    Create a tree of file names.
+ Recursively traverse a directory structure, generating a tree of all filenames.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">tab</span>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The path to build a tree from.
+        </li>
+        <li><span class="parameter">modify</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         The table to copy
+         A table to add entries to.
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">foreach</span>
+            <span class="types"><span class="type">function</span></span>
+         A function to call with each file path as its argument.
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -100,7 +112,7 @@
     <ol>
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-        The new table
+        A table of file paths
     </ol>
 
 
