@@ -10,7 +10,7 @@ fi
 liblua="$1"
 shift
 
-env LC_PATH="$liblua/lang/?.lua" lua -e "
+env LC_PATH="$liblua/lang/?.lua;$LC_PATH" lua -e "
 table.insert(package.searchers, function(mod)
   return loadfile('$liblua/src/'..mod:gsub('%.','/')..'.lua')
 end)
