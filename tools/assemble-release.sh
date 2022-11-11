@@ -10,7 +10,7 @@ printf "=> Removing old build files...\n"
 rm -rf build cynosure-2/kernel.lua /tmp/cynosure2buildoutput
 
 printf "=> Creating base directory structure\n"
-mkdir -p build/{boot,bin,lib,etc/upt/db,etc/upt/repos.d,usr/lib,usr/bin}
+mkdir -p build/{boot,bin,lib,etc/upt/db,etc/upt/lists,etc/upt/repos.d,usr/lib,usr/bin}
 
 export OS="ulos2"
 
@@ -36,6 +36,7 @@ mv build/lib/{lua/,}package.lua
 cp coreutils/src/* build/bin/
 cp upt/src/bin/* build/bin/
 cp -r upt/src/lib/* build/lib/lua/
+cp config/repos build/etc/upt/
 # compatibility with scripts starting with #!/usr/bin/env
 mv build/bin/env build/usr/bin/env
 #cp -r luash/{bin,lib,etc} build/
