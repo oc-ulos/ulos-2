@@ -1,10 +1,10 @@
 file = {
   "cynosure-2/src/syscalls.lua",
-  "liblua/src/",
+  "liblua/src/lib/lua",
   exclude = {
     "liblua/src/lib/lua/sha3.lua",
     "liblua/src/lib/lua/posix",
-    "liblua/src/lib/lua/syscalls.lua"
+    "liblua/src/lib/lua/syscalls.lua",
   }
 }
 
