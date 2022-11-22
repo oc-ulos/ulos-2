@@ -6,6 +6,7 @@ set -e
 base=$(realpath $(dirname $(dirname $0)))
 liblua=$base/liblua
 runner=$(realpath $(dirname $0)/ulos-runner)
+export OS=ulos2
 
 uptcmd () {
   cmd=$1
