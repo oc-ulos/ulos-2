@@ -15,7 +15,7 @@ table.insert(package.searchers, function(mod)
   return loadfile('$liblua/src/lib/lua/'..mod:gsub('%.','/')..'.lua')
 end)
 
-local upt = '${liblua:0:-7}/upt/src/lib/'
+local upt = '${liblua:0:-7}/upt/src/lib/lua/'
 package.path = package.path .. ';' .. upt .. '?.lua;' .. upt .. '?/init.lua'
 
 if not bit32 then

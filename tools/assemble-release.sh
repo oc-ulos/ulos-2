@@ -8,7 +8,9 @@ liblua=$base/liblua
 runner=$(realpath $(dirname $0)/ulos-runner)
 
 uptcmd () {
-  $runner $liblua $base/upt/src/bin/$1.lua -c "$@"
+  cmd=$1
+  shift
+  $runner $liblua $base/upt/src/bin/$cmd.lua -c "$@"
 }
 
 printf "=> Building packages\n"
