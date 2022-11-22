@@ -1,62 +1,35 @@
 #!/bin/bash
-# Assemble a ULOS release.  Once ULOS's structure is a bit
-# more fleshed out there will be a Lua script available to
-# do this from within ULOS itself. Because self-hosting is
-# cool :)
+# Assemble a ULOS 2 release using UPT packages.
 
 set -e
 
-printf "=> Removing old build files...\n"
-rm -rf build cynosure-2/kernel.lua /tmp/cynosure2buildoutput
+base=$(realpath $(dirname $(dirname $0)))
+liblua=$base/liblua
+runner=$(realpath $(dirname $0)/ulos-runner)
 
-printf "=> Creating base directory structure\n"
-mkdir -p build/{boot,bin,lib,etc/upt/db,etc/upt/lists,etc/upt/repos.d,usr/lib,usr/bin}
+uptcmd () {
+  $runner $liblua $base/upt/src/bin/$1.lua -c "$@"
+}
 
-export OS="ulos2"
+printf "=> Building packages\n"
 
-printf "=> Assembling Cynosure 2\n"
-cp config/kconfig cynosure-2/.config
-cd cynosure-2
-lua scripts/build.lua
-cd ..
+packages=$(echo cldr config coreutils cynosure-2 liblua reknit upt vbls)
 
-printf "=> Assembling the Cynosure Loader\n"
-cd cldr
-lua scripts/preproc.lua src/main.lua cldr.lua
-cd ..
-
-printf "=> Copying in files\n"
-cp cldr/cldr.lua build/init.lua
-cp config/cldr.cfg build/boot/cldr.cfg
-cp config/src/* build/
-cp cynosure-2/kernel.lua build/boot/cynosure.lua
-cp reknit/init.lua build/bin/
-cp -r liblua/src/ build/lib/lua
-mv build/lib/{lua/,}package.lua
-cp coreutils/src/* build/bin/
-cp upt/src/bin/* build/bin/
-cp -r upt/src/lib/* build/lib/lua/
-# compatibility with scripts starting with #!/usr/bin/env
-mv build/bin/env build/usr/bin/env
-#cp -r luash/{bin,lib,etc} build/
-cp vbls/src/vbls.lua build/bin/sh.lua
-cp -r liblua/lang build/etc/
-mkdir -p build/root
-
-printf "=> Setting file permissions\n"
-for f in $(find build); do
-  if [ $f != "build" ]; then
-    mode=33188
-    if [ -d $f ]; then
-      mode=16804
-    fi
-    cat > $(dirname $f)/.$(basename $f).attr << EOF
-mode:$mode
-created:$(date +"%s")
-EOF
-  fi
+for pkg in $packages; do
+  printf "==> $pkg\n"
+  cd $pkg
+  uptcmd uptb >/dev/null
+  cd ..
 done
 
+printf "=> Installing packages to fakeroot\n"
+rm -rf build; mkdir -p build
+
+for pkg in $packages; do
+  uptcmd upti $pkg/*.mtar --rootfs $PWD/build/
+done
+
+# still gotta do this manually
 printf "=> Marking programs executable\n"
 for f in $(ls build/bin); do
   if [ "${f:1:1}" != "." ]; then
@@ -81,21 +54,3 @@ cat > build/bin/.passwd.lua.attr << EOF
 mode:35309
 created:$(date +"%s")
 EOF
-
-if [ "$1" = "cpio" ]; then
-  cpio=$(command -v cpio)
-  if ! [ "$cpio" ]; then
-    printf "=> cpio utility not found - cannot continue\n"
-    exit 1
-  fi
-  printf "=> Assembling release CPIO\n"
-  cd build
-  find . -type f | $cpio -o > ../ulos2.cpio
-  cd ..
-fi
-
-if [ "$1" = "ocvm" ]; then
-  ocvm ..
-fi
-
-printf "=> Done!\n"
