@@ -16,12 +16,16 @@ uptcmd () {
 
 printf "=> Building packages\n"
 
-packages=$(echo cldr config coreutils cynosure-2 liblua reknit upt vbls)
+printf "==> Cynosure 2 build configuration\n"
+cd cynosure-2; scripts/genuptconf.lua; cd ..
+
+packages=$(echo cldr config coreutils cynosure-2 liblua reknit upt vbls \
+  installer)
 
 for pkg in $packages; do
   printf "==> $pkg\n"
   cd $pkg
-  uptcmd uptb >/dev/null
+  uptcmd uptb #>/dev/null
   cd ..
 done
 
@@ -31,6 +35,9 @@ rm -rf build; mkdir -p build
 for pkg in $packages; do
   uptcmd upti $pkg/*.mtar --rootfs $PWD/build/
 done
+
+mkdir -p build/etc/upt/cache
+cp config/*.mtar build/etc/upt/cache/ulos2-config.mtar
 
 # still gotta do this manually
 printf "=> Marking programs executable\n"

@@ -28,3 +28,6 @@
 [submodule "upt"]
 	path = upt
 	url = git@github.com:oc-ulos/upt
+[submodule "installer"]
+	path = installer
+	url = git@github.com:oc-ulos/ulos2-installer
