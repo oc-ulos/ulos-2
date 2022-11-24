@@ -64,3 +64,21 @@ cat > build/bin/.passwd.lua.attr << EOF
 mode:35309
 created:$(date +"%s")
 EOF
+
+if [ "$1" = "mtar" ]; then
+  printf "=> Generating self-extracting release image\n"
+  mkdir build/{dev,proc,tmp,install}
+  touch build/{dev,proc,tmp,install}/.keepme
+  # slightly hacky way of starting the installer
+  echo "clr:1:wait:/bin/clear.lua" >> build/etc/inittab
+  echo "ins:1:wait:/bin/install.lua" >> build/etc/inittab
+  find build -type f | tools/mtar.lua build > release.mtar
+  cat tools/mtarldr.lua release.mtar tools/mtarldr_2.lua > \
+    $OS-$(date +%y.%m).lua
+  rm release.mtar
+elif [ "$1" = "ocvm" ]; then
+  printf "=> Launching OCVM"
+  ocvm ..
+fi
+
+printf "=> Done!\n"
