@@ -25,6 +25,7 @@ packages=$(echo cldr config coreutils cynosure-2 liblua reknit upt vbls \
 for pkg in $packages; do
   printf "==> $pkg\n"
   cd $pkg
+  rm -f *.mtar
   uptcmd uptb #>/dev/null
   cd ..
 done
