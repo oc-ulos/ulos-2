@@ -2,4 +2,4 @@ build/*
 *.cpio
 doc/*
 *.mtar
-*.lua
+/*.lua
