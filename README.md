@@ -12,6 +12,8 @@ Documentation for all libraries and system calls is available [here](https://ulo
 
 ## Building
 
+#### Building ULOS 2 is only necessary for developers.  Users should use the installer - see 'installation' below.
+
 **Clone this repository with `--recursive`.**
 
 This repository's submodule configuration assumes you have registered an SSH key with GitHub.  If you have not done so you will not be able to clone the repository.
@@ -21,6 +23,10 @@ You will need LuaPosix to build Cynosure 2 and CLDR 2.
 Run `tools/setup.sh` to switch all submodules to their main branches after initial cloning.  Run `tools/pull-repos.sh` to pull all repo updates.
 
 Run `tools/assemble-release.sh` from the repository root to generate a ULOS 2 system in `build/`.  Run `tools/assemble-release.sh cpio` to additionally generate a release CPIO.
+
+## Installation
+
+To begin the ULOS 2 installation process, just run `pastebin run tkhgk4AJ beta.1` from any OpenOS system.
 
 ## Contact us
 
