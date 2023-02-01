@@ -34,8 +34,8 @@
 
 <h2>Examples</h2>
 <ul class="nowrap">
-  <li><strong>getopt.build.lua</strong></li>
-  <li><a href="../examples/getopt.process.lua.html">getopt.process.lua</a></li>
+  <li><a href="../examples/getopt.build.lua.html">getopt.build.lua</a></li>
+  <li><strong>getopt.process.lua</strong></li>
 </ul>
 <h2>Libraries</h2>
 <ul class="nowrap">
@@ -56,24 +56,19 @@
 
 <div id="content">
 
-    <h2>getopt.build.lua</h2>
+    <h2>getopt.process.lua</h2>
 <pre>
 <span class="keyword">local</span> argv = <span class="global">require</span>(<span class="string">"argcompat"</span>).command(<span class="string">"example"</span>, ...)
 
 <span class="keyword">local</span> getopt = <span class="global">require</span>(<span class="string">"getopt"</span>)
 
-<span class="keyword">local</span> options, usage, condense = getopt.build {
+<span class="keyword">local</span> args, opts, usage = getopt.process {
   { <span class="string">"Show this help message"</span>, <span class="keyword">false</span>, <span class="string">"h"</span>, <span class="string">"help"</span> },
   { <span class="string">"Be verbose"</span>,             <span class="keyword">false</span>, <span class="string">"v"</span>, <span class="string">"verbose"</span> },
-  { <span class="string">"Print version and exit"</span>, <span class="keyword">false</span>, <span class="string">"V"</span>, <span class="string">"version"</span> }
-}
-
-<span class="keyword">local</span> args, opts = getopt.getopt({
-  options = options,
+  { <span class="string">"Print version and exit"</span>, <span class="keyword">false</span>, <span class="string">"V"</span>, <span class="string">"version"</span> },
   exit_on_bad_opt = <span class="keyword">false</span>,
-}, argv)
-
-condense(opts)
+  args = argv,
+}
 
 <span class="keyword">if</span> opts.h <span class="keyword">then</span>
   <span class="global">io</span>.stderr:write(<span class="global">string</span>.format(<span class="string">[[
