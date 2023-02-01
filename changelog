@@ -1,0 +1,4 @@
+ulos2-beta.2:
+	* coreutils: Implemented `free`
+	* coreutils: `lua` now sets up `arg` more-or-less correctly
+	* liblua: Implemented `getopt.process`
