@@ -6,6 +6,7 @@ ulos2-beta.2:
 	disappear
 	* cynosure-2: Sysyield functions now `pcall` yields, to avoid crashes when
 	e.g. yielding from a function given to `string.gsub`
+	* cynosure-2: Added a `tty.tab_width` command line argument
 	* coreutils: Implemented `free`
 	* coreutils: `lua` now sets up `arg` more-or-less correctly
 	* coreutils: `env` now properly handles argument processing
