@@ -18,7 +18,7 @@ printf "=> Building packages\n"
 
 printf "==> Cynosure 2 build configuration\n"
 cd cynosure-2; scripts/genuptconf.lua; cd ..
-cp -n config/kconfig cynosure-2/.config
+cp -n config/kconfig cynosure-2/.config || true
 
 packages=$(echo cldr config coreutils cynosure-2 liblua reknit upt vbls \
   installer)
