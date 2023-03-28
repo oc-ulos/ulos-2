@@ -19,3 +19,4 @@ ulos2-beta.3:
 	* liblua: Added an option `exclude_numbers` to `getopt`
 	* liblua: Tweaked `getopt`'s invalid short option error message to be
 	slightly clearer
+	* liblua: Fixed `treeutil` not recursively passing its `foreach` argument
