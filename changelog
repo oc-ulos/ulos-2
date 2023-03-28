@@ -1,5 +1,5 @@
 ulos2-beta.3:
-	Mostly focusing on compatibility and bug fixes.
+	Focusing on compatibility, bug fixes, and fleshing out coreutils.
 
 	* cynosure-2: Fixed a very subtle bug with the preemption layer where
 	calling code after loading other code would make the sysyield function
@@ -9,6 +9,7 @@ ulos2-beta.3:
 	* cynosure-2: Added a `tty.tab_width` command line argument
 	* coreutils: Implemented `free`
 	* coreutils: Implemented `df`
+	* coreutils: Implemented `du`
 	* coreutils: `lua` now sets up `arg` more-or-less correctly
 	* coreutils: `env` now properly handles argument processing
 	* coreutils: `mkdir` now properly ignores `EEXIST`
