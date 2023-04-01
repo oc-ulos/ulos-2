@@ -46,7 +46,7 @@ printf "=> Marking programs executable\n"
 for f in $(ls build/bin); do
   if [ "${f:1:1}" != "." ]; then
     cat > build/bin/.$f.attr << EOF
-mode:33261
+mode:$([ $f = "sudo.lua" ] && echo "35309" || echo "33261")
 created:$(date +"%s")
 EOF
   fi

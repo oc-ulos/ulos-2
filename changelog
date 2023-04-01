@@ -7,14 +7,22 @@ ulos2-beta.3:
 	* cynosure-2: Sysyield functions now `pcall` yields, to avoid crashes when
 	e.g. yielding from a function given to `string.gsub`
 	* cynosure-2: Added a `tty.tab_width` command line argument
+	* cynosure-2: Added a `max_proc_time` command line argument
+	* cynosure-2: The setuid and setgid file mode bits no longer set the real
+	uid or gid
 	* coreutils: Implemented `free`
 	* coreutils: Implemented `df`
 	* coreutils: Implemented `du`
+	* coreutils: Implemented `sudo`
 	* coreutils: `lua` now sets up `arg` more-or-less correctly
 	* coreutils: `env` now properly handles argument processing
 	* coreutils: `mkdir` now properly ignores `EEXIST`
 	* coreutils: `chmod` now accepts `[ugoa][+-=][rwx]` modes
 	* coreutils: `login` now only allows itself to be run by root
+	* coreutils: `ls` now displays filenames correctly when given options while
+	listing multiple files (e.g. `ls -l a/b a/c`), and does not show these
+	filenames when `-l` is given
+	* coreutils: `chown` no longer chokes on directories
 	* liblua: Implemented `getopt.process`
 	* liblua: `package.path` now contains `./?.lua;./?/init.lua` by default
 	* liblua: Added an option `exclude_numbers` to `getopt`

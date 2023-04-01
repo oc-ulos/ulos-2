@@ -8,25 +8,25 @@ ULOS 2 boasts several advantages over [ULOS 1](https://github.com/ocawesome101/o
 
 ULOS 2 is also even more modular than ULOS 1 - each component is split into its own submodule and default configurations are defined by ULOS 2, so you can override configurations or swap out individual components very easily.
 
-Documentation for all libraries and system calls is available [here](https://ulos2.ocaweso.me/).
+Documentation for all libraries and system calls is available [here](https://ulos2.ocaweso.me/).  Most utilities support a subset of options from their GNU coreutils counterparts, and all but `clear` and `login` display usage information when given `--help`.
+
+## Installation
+
+To begin the ULOS 2 installation process, run `pastebin run tkhgk4AJ beta.1` from any OpenOS system.
 
 ## Building
 
-#### Building ULOS 2 is only necessary for developers.  Users should use the installer - see 'installation' below.
+#### Building ULOS 2 is only necessary for developers.  Users should use the installer - see 'installation' above.
 
 **Clone this repository with `--recursive`.**
 
-This repository's submodule configuration assumes you have registered an SSH key with GitHub.  If you have not done so you will not be able to clone the repository.
+This repository's submodule configuration assumes you have registered an SSH key with GitHub.  If you have not done so you will not be able to successfully clone the repository.
 
 You will need LuaPosix to build Cynosure 2 and CLDR 2.
 
 Run `tools/setup.sh` to switch all submodules to their main branches after initial cloning.  Run `tools/pull-repos.sh` to pull all repo updates.
 
 Run `tools/assemble-release.sh` from the repository root to generate a ULOS 2 system in `build/`.  Run `tools/assemble-release.sh cpio` to additionally generate a release CPIO.
-
-## Installation
-
-To begin the ULOS 2 installation process, just run `pastebin run tkhgk4AJ beta.1` from any OpenOS system.
 
 ## Contact us
 

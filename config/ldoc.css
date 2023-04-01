@@ -4,7 +4,7 @@
 }
 
 html {
-    color: #DDD;
+    color: #AAA;
     background: #000;
 }
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td {
@@ -97,7 +97,7 @@ a:visited { font-weight: bold; color: #00AAFF; text-decoration: none; }
 a:link:hover { text-decoration: underline; }
 
 hr {
-    color:#cccccc;
+    color:#aaaaaa;
     background: #00007f;
     height: 1px;
 }
@@ -135,7 +135,7 @@ table.index td { text-align: left; vertical-align: top; }
 
 #product {
     text-align: center;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #aaaaaa;
     background-color: #000;
 }
 
@@ -145,7 +145,7 @@ table.index td { text-align: left; vertical-align: top; }
 
 #main {
     background-color: rgb(16, 16, 16);
-    border-left: 2px solid #cccccc;
+    border-left: 2px solid #aaaaaa;
 }
 
 #navigation {
@@ -159,7 +159,7 @@ table.index td { text-align: left; vertical-align: top; }
 #navigation h2 {
     background-color: #000;
     font-size:1.1em;
-    color:#DDD;
+    color:#AAA;
     text-align: left;
     vertical-align: center;
     padding:0.2em;
@@ -188,15 +188,15 @@ table.index td { text-align: left; vertical-align: top; }
     margin-left: 14em;
     padding: 1em;
     width: 700px;
-    border-left: 2px solid #cccccc;
-    border-right: 2px solid #cccccc;
+    border-left: 2px solid #aaaaaa;
+    border-right: 2px solid #aaaaaa;
     background-color: #000;
 }
 
 #about {
     clear: both;
     padding: 5px;
-    border-top: 2px solid #cccccc;
+    border-top: 2px solid #aaaaaa;
     background-color: #000;
 }
 
@@ -235,14 +235,14 @@ table.index td { text-align: left; vertical-align: top; }
 table.module_list {
     border-width: 1px;
     border-style: solid;
-    border-color: #cccccc;
+    border-color: #aaaaaa;
     border-collapse: collapse;
 }
 table.module_list td {
     border-width: 1px;
     padding: 3px;
     border-style: solid;
-    border-color: #cccccc;
+    border-color: #aaaaaa;
 }
 table.module_list td.name { background-color: #0f0f0f; min-width: 200px; }
 table.module_list td.summary { width: 100%; }
@@ -251,14 +251,14 @@ table.module_list td.summary { width: 100%; }
 table.function_list {
     border-width: 1px;
     border-style: solid;
-    border-color: #cccccc;
+    border-color: #aaaaaa;
     border-collapse: collapse;
 }
 table.function_list td {
     border-width: 1px;
     padding: 3px;
     border-style: solid;
-    border-color: #cccccc;
+    border-color: #aaaaaa;
 }
 table.function_list td.name { background-color: #0f0f0f; min-width: 200px; }
 table.function_list td.summary { width: 100%; }
