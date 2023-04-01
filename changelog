@@ -23,6 +23,7 @@ ulos2-beta.3:
 	listing multiple files (e.g. `ls -l a/b a/c`), and does not show these
 	filenames when `-l` is given
 	* coreutils: `chown` no longer chokes on directories
+	* coreutils: `useradd` now `chown`s created home directories
 	* liblua: Implemented `getopt.process`
 	* liblua: `package.path` now contains `./?.lua;./?/init.lua` by default
 	* liblua: Added an option `exclude_numbers` to `getopt`
