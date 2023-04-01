@@ -41,12 +41,37 @@ done
 mkdir -p build/etc/upt/cache
 cp config/*.mtar build/etc/upt/cache/ulos2-config.mtar
 
-# still gotta do this manually
+if [ "$1" = "mtar" ]; then
+  printf "=> Generating self-extracting release image\n"
+  mkdir build/{dev,proc,tmp,install}
+  touch build/{dev,proc,tmp,install}/.keepme
+  # slightly hacky way of starting the installer
+  echo "clr:1:wait:/bin/clear.lua" >> build/etc/inittab
+  echo "ins:1:wait:/bin/install.lua" >> build/etc/inittab
+  find build -type f | tools/mtar.lua build > release.mtar
+  cat tools/mtarldr.lua release.mtar tools/mtarldr_2.lua > \
+    $OS-$(date +%y.%m).lua
+  rm release.mtar
+fi
+
+# mark file permissions for the ocvm release
+printf "=> Marking file permissions\n"
+for f in $(find build/*); do
+  if [ "${f:1:1}" != "." ]; then
+    base=$(basename $f)
+    dir=$(dirname $f)
+    cat > $dir/.$base.attr << EOF
+mode:33188
+created:$(date +"%s")
+EOF
+  fi
+done
+
 printf "=> Marking programs executable\n"
 for f in $(ls build/bin); do
   if [ "${f:1:1}" != "." ]; then
     cat > build/bin/.$f.attr << EOF
-mode:$([ $f = "sudo.lua" ] && echo "35309" || echo "33261")
+mode:33261
 created:$(date +"%s")
 EOF
   fi
@@ -61,24 +86,20 @@ EOF
   fi
 done
 
-# make `passwd` setuid
+# make `passwd` and `sudo` setuid
 cat > build/bin/.passwd.lua.attr << EOF
 mode:35309
 created:$(date +"%s")
 EOF
 
-if [ "$1" = "mtar" ]; then
-  printf "=> Generating self-extracting release image\n"
-  mkdir build/{dev,proc,tmp,install}
-  touch build/{dev,proc,tmp,install}/.keepme
-  # slightly hacky way of starting the installer
-  echo "clr:1:wait:/bin/clear.lua" >> build/etc/inittab
-  echo "ins:1:wait:/bin/install.lua" >> build/etc/inittab
-  find build -type f | tools/mtar.lua build > release.mtar
-  cat tools/mtarldr.lua release.mtar tools/mtarldr_2.lua > \
-    $OS-$(date +%y.%m).lua
-  rm release.mtar
-elif [ "$1" = "ocvm" ]; then
+cat > build/bin/.sudo.lua.attr << EOF
+mode:35309
+created:$(date +"%s")
+EOF
+
+
+
+if [ "$1" = "ocvm" ]; then
   printf "=> Launching OCVM"
   ocvm ..
 fi
