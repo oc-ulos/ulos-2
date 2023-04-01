@@ -97,8 +97,6 @@ mode:35309
 created:$(date +"%s")
 EOF
 
-
-
 if [ "$1" = "ocvm" ]; then
   printf "=> Launching OCVM"
   ocvm ..
