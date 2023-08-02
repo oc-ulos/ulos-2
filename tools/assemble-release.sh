@@ -56,7 +56,7 @@ fi
 
 # mark file permissions for the ocvm release
 printf "=> Marking file permissions\n"
-for f in $(find build/*); do
+for f in $(find build/* -type f); do
   if [ "${f:1:1}" != "." ]; then
     base=$(basename $f)
     dir=$(dirname $f)
@@ -66,6 +66,18 @@ created:$(date +"%s")
 EOF
   fi
 done
+# mark directory permissions
+for f in $(find build/* -type d); do
+  if [ "${f:1:1}" != "." ]; then
+    base=$(basename $f)
+    dir=$(dirname $f)
+    cat > $dir/.$base.attr << EOF
+mode:16804
+created:$(date +"%s")
+EOF
+  fi
+done
+
 
 printf "=> Marking programs executable\n"
 for f in $(ls build/bin); do
