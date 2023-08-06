@@ -1,32 +1,18 @@
-ulos2-beta.3:
-	Focusing on compatibility, bug fixes, and fleshing out coreutils.
+ulos2-beta.4:
+	Finallg brings unmanaged filesystem support!
 
-	* cynosure-2: Fixed a very subtle bug with the preemption layer where
-	calling code after loading other code would make the sysyield function
-	disappear
-	* cynosure-2: Sysyield functions now `pcall` yields, to avoid crashes when
-	e.g. yielding from a function given to `string.gsub`
-	* cynosure-2: Added a `tty.tab_width` command line argument
-	* cynosure-2: Added a `max_proc_time` command line argument
-	* cynosure-2: The setuid and setgid file mode bits no longer set the real
-	uid or gid
-	* coreutils: Implemented `free`
-	* coreutils: Implemented `df`
-	* coreutils: Implemented `du`
-	* coreutils: Implemented `sudo`
-	* coreutils: `lua` now sets up `arg` more-or-less correctly
-	* coreutils: `env` now properly handles argument processing
-	* coreutils: `mkdir` now properly ignores `EEXIST`
-	* coreutils: `chmod` now accepts `[ugoa][+-=][rwx]` modes
-	* coreutils: `login` now only allows itself to be run by root
-	* coreutils: `ls` now displays filenames correctly when given options while
-	listing multiple files (e.g. `ls -l a/b a/c`), and does not show these
-	filenames when `-l` is given
-	* coreutils: `chown` no longer chokes on directories
-	* coreutils: `useradd` now `chown`s created home directories
-	* liblua: Implemented `getopt.process`
-	* liblua: `package.path` now contains `./?.lua;./?/init.lua` by default
-	* liblua: Added an option `exclude_numbers` to `getopt`
-	* liblua: Tweaked `getopt`'s invalid short option error message to be
-	slightly clearer
-	* liblua: Fixed `treeutil` not recursively passing its `foreach` argument
+	* ulos-2: fixed release script not setting permissions correctly
+	* cynosure-2: fixed several bugs with the untested `hdX` block device code
+	* cynosure-2: fixed file descriptor flush propagation causing ttys
+	* cynosure-2: added SimpleFS driver (!)
+	* cynosure-2: added `sync()` system call
+	* cynosure-2: flush all buffers before shutdown
+	* cynosure-2: added `SYSTEM` loglevel used only for poweroff/reboot messages
+	* cynosure-2: file permissions are now set on creation according to the
+	umask _at the filesystem level_ rather than the kernel calling `chmod`
+	* cynosure-2, liblua: added new error `ENOTEMPTY`
+	* liblua: fixed `posix.errno` missing `ENOSYS`
+	* coreutils: fixed `chmod` not matching its mode argument correctly
+	* coreutils: added `mkfs.sfs` utility
+	* coreutils: fixed `ls` missing colors for unknown file types
+	* vbls: added `umask` builtin

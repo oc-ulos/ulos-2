@@ -60,7 +60,7 @@ EXEC_LUA=y
 # File systems
 # * SFS: the Simple File System
 # * Managed: OpenComputers' managed filesystems
-FS_SFS=n
+FS_SFS=y
 FS_MANAGED=y
 # optional pseudo-filesystems
 FS_COMPONENT=y

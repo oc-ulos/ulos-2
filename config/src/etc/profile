@@ -1,9 +1,10 @@
 # ulos 2's /etc/profile
 
+umask --x--x-wx
+alias reboot 'poweroff --reboot'
+
 if equals $USER root then
   set PS1 '\e[91m\u\e[39m@\e[91m\h\e[39m: \e[94m\w\e[39m# '
 else
   set PS1 '\e[92m\u\e[39m@\e[92m\h\e[39m: \e[94m\w\e[39m$ '
 end
-
-alias reboot 'poweroff --reboot'
