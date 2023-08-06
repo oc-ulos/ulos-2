@@ -58,7 +58,7 @@ EXEC_CLE=n
 EXEC_SHEBANG=y
 EXEC_LUA=y
 # File systems
-# * SFS: the Simple File System
+# * SFS: the Simple File System (if y, recommend PART_ENABLE=y)
 # * Managed: OpenComputers' managed filesystems
 FS_SFS=y
 FS_MANAGED=y
@@ -69,6 +69,12 @@ FS_PROC=y
 PROCFS_CONFIG=y
 PROCFS_BINFMT=n
 PROCFS_EVENT=y
+# Partition table support
+# * MTPT: Minitel partition table used by PsychOS
+# * OSDI: Open Simple Disk Info v1.1
+PART_ENABLE=y
+PART_MTPT=y
+PART_OSDI=y
 # networking protocols
 NET_ENABLE=y
 DEFAULT_HOSTNAME=localhost
