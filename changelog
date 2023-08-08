@@ -1,6 +1,4 @@
 ulos2-beta.4:
-	Finallg brings unmanaged filesystem support!
-
 	* ulos-2: fixed release script not setting permissions correctly
 	* cynosure-2: fixed several bugs with the untested `hdX` block device code
 	* cynosure-2: fixed file descriptor flush propagation causing ttys
@@ -10,9 +8,17 @@ ulos2-beta.4:
 	* cynosure-2: added `SYSTEM` loglevel used only for poweroff/reboot messages
 	* cynosure-2: file permissions are now set on creation according to the
 	umask _at the filesystem level_ rather than the kernel calling `chmod`
+	* cynosure-2: added device handler support to the devfs
+	* cynosure-2: added `reregister` ioctl to re-run device handlers, useful if
+	e.g. a partition table changes
+	* cynosure-2: devfs devices now have a `type` field used mostly for handlers
+	* cynosure-2: added support for MTPT and OSDI partition table formats
 	* cynosure-2, liblua: added new error `ENOTEMPTY`
 	* liblua: fixed `posix.errno` missing `ENOSYS`
+	* coreutils: fixed `ls` missing colors for unknown file types
 	* coreutils: fixed `chmod` not matching its mode argument correctly
 	* coreutils: added `mkfs.sfs` utility
-	* coreutils: fixed `ls` missing colors for unknown file types
+	* coreutils: added `mkpart` utility
+	* coreutils: added `diskinfo` utility
+	* coreutils: `wc` can now read from standard input
 	* vbls: added `umask` builtin
