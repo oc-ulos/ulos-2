@@ -41,19 +41,6 @@ done
 mkdir -p build/etc/upt/cache
 cp config/*.mtar build/etc/upt/cache/ulos2-config.mtar
 
-if [ "$1" = "mtar" ]; then
-  printf "=> Generating self-extracting release image\n"
-  mkdir build/{dev,proc,tmp,install}
-  touch build/{dev,proc,tmp,install}/.keepme
-  # slightly hacky way of starting the installer
-  echo "clr:1:wait:/bin/clear.lua" >> build/etc/inittab
-  echo "ins:1:wait:/bin/install.lua" >> build/etc/inittab
-  find build -type f | tools/mtar.lua build > release.mtar
-  cat tools/mtarldr.lua release.mtar tools/mtarldr_2.lua > \
-    $OS-$(date +%y.%m).lua
-  rm release.mtar
-fi
-
 # mark file permissions for the ocvm release
 printf "=> Marking file permissions\n"
 for f in $(find build/* -type f); do
@@ -77,7 +64,6 @@ created:$(date +"%s")
 EOF
   fi
 done
-
 
 printf "=> Marking programs executable\n"
 for f in $(ls build/bin); do
@@ -108,6 +94,19 @@ cat > build/bin/.sudo.lua.attr << EOF
 mode:35309
 created:$(date +"%s")
 EOF
+
+if [ "$1" = "mtar" ]; then
+  printf "=> Generating self-extracting release image\n"
+  mkdir build/{dev,proc,tmp,install}
+  touch build/{dev,proc,tmp,install}/.keepme
+  # slightly hacky way of starting the installer
+  echo "clr:1:wait:/bin/clear.lua" >> build/etc/inittab
+  echo "ins:1:wait:/bin/install.lua" >> build/etc/inittab
+  find build -type f | tools/mtar.lua build > release.mtar
+  cat tools/mtarldr.lua release.mtar tools/mtarldr_2.lua > \
+    $OS-$(date +%y.%m).lua
+  rm release.mtar
+fi
 
 if [ "$1" = "ocvm" ]; then
   printf "=> Launching OCVM"

@@ -38,7 +38,6 @@ repeat
   startoffset = startoffset + 1
   local t = computer.uptime()
   if t - last_time >= 0.1 then
-    --status(30, 1, tostring(startoffset))
     status(28, 1, seq[si])
     si = si + 1
     if not seq[si] then si = 1 end
@@ -96,7 +95,13 @@ local function read_header()
   if not flendat then return end
   local flen = string.unpack(">I8", flendat)
   local offset = fs.seek(handle, "cur", 0)
-  status(24, 2, name .. (" "):rep(50 - (24 + #name)))
+  local t = computer.uptime()
+  if t - last_time >= 0.1 then
+    status(25, 2, seq[si])
+    si = si + 1
+    if not seq[si] then si = 1 end
+    last_time = t
+  end
   fs.seek(handle, "cur", flen)
   add_to_tree(name, offset, flen)
   return true
