@@ -7,6 +7,4 @@ git add .
 git commit "$@"
 
 git submodule foreach "(git push; true) &"
-echo $(jobs -p)
-while ! [ -z $(jobs -p) ]; do wait; done
-#git push
+git push
