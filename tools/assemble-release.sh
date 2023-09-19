@@ -113,4 +113,4 @@ if [ "$1" = "ocvm" ]; then
   ocvm ..
 fi
 
-printf "=> Done!\n"
+printf "=> Done!\e[39m\n"
