@@ -1,6 +1,6 @@
 # ![logo](./ulos2-logo.png) ULOS 2
 
-Home of ULOS 2 for [OpenComputers](curseforge.com/minecraft/mc-mods/opencomputers).
+Home of ULOS 2 for [OpenComputers](https://legacy.curseforge.com/minecraft/mc-mods/opencomputers).
 
 We recommend running ULOS 2 under OpenComputers 1.7.7 or newer.  Because Minecraft 1.12.2 ships with a horribly outdated build of Java 8, you may need to [upgrade to a newer build](https://www.youtube.com/watch?v=fZ2QIarg_c8) for certain networking features to function.
 
