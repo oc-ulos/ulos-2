@@ -12,7 +12,7 @@ Documentation for all libraries and system calls is available [here](https://ulo
 
 ## Installation
 
-To begin the ULOS 2 installation process, run `pastebin run tkhgk4AJ beta.1` from any OpenOS system.
+See the [latest release](https://github.com/oc-ulos/ulos-2/releases/latest) page for instructions.
 
 ## Building
 
