@@ -1,4 +1,3 @@
-mnt:1:wait:/bin/readfstab.lua
-gtyd:1:respawn:/bin/gettyd.lua
-hlt:0:once:/bin/poweroff.lua --halt
-pwr:6:once:/bin/poweroff.lua --poweroff
+id:1:initdefault:
+fs::bootwait:/bin/readfstab.lua
+1:1:respawn:/bin/getty.lua tty1
