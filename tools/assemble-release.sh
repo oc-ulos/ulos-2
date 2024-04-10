@@ -59,7 +59,7 @@ for f in $(find build/* -type d); do
     base=$(basename $f)
     dir=$(dirname $f)
     cat > $dir/.$base.attr << EOF
-mode:16804
+mode:16877
 created:$(date +"%s")
 EOF
   fi
