@@ -1,9 +1,6 @@
 [submodule "cynosure-2"]
 	path = cynosure-2
 	url = git@github.com:oc-ulos/oc-cynosure-2
-[submodule "cle-toolchain"]
-	path = cle-toolchain
-	url = git@github.com:oc-ulos/cle-toolchain
 [submodule "liblua"]
 	path = liblua
 	url = git@github.com:oc-ulos/liblua.git
