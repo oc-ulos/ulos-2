@@ -1,6 +1,6 @@
 # ulos 2's /etc/profile
 
-umask --x--x-wx
+umask ----w--w-
 alias reboot 'poweroff --reboot'
 
 if equals $USER root then
