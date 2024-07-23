@@ -1,7 +1,8 @@
 # ulos 2's /etc/profile
 
-umask --x--x-wx
+umask ----w--w-
 alias reboot 'poweroff --reboot'
+alias logout exit
 
 if equals $USER root then
   set PS1 '\e[91m\u\e[39m@\e[91m\h\e[39m: \e[94m\w\e[39m# '

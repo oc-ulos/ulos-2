@@ -1,1 +1,3 @@
-mnt:1:wait:/bin/readfstab.lua
+id:1:initdefault:
+fs::bootwait:/bin/readfstab.lua
+1:1:respawn:/bin/getty.lua tty1
