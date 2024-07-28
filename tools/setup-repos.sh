@@ -1,4 +1,5 @@
 #!/bin/bash
 
-git submodule foreach "git switch dev; true"
+branch=${1:-dev}
+git submodule foreach "git switch $branch; true"
 git switch dev
