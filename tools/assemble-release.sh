@@ -99,13 +99,25 @@ if [ "$1" = "mtar" ]; then
   printf "=> Generating self-extracting release image\n"
   mkdir build/{dev,proc,tmp,install}
   touch build/{dev,proc,tmp,install}/.keepme
-  # slightly hacky way of starting the installer
-  echo "clr:1:wait:/bin/clear.lua" >> build/etc/inittab
-  echo "ins:1:wait:/bin/install.lua" >> build/etc/inittab
+  # slightly hacky way installer image config
+  cat > build/etc/issue << EOF
+Welcome to ULOS 2!
+
+To install ULOS 2, run 'install' from the shell.
+Default credentials are root/root.
+
+EOF
+
+cat > build/etc/inittab << EOF
+id:1:initdefault:
+fs::bootwait:/bin/readfstab.lua
+1:1:respawn:/bin/getty.lua tty1 -a root
+EOF
+
   find build -type f | tools/mtar.lua build > release.mtar
-  cat tools/mtarldr.lua release.mtar tools/mtarldr_2.lua > \
-    $OS-$(date +%y.%m).lua
-  rm release.mtar
+  cat  > $OS-$(date +%y.%m).lua tools/mtarldr.lua release.mtar - << EOF
+]=======]
+EOF
 fi
 
 if [ "$1" = "ocvm" ]; then
