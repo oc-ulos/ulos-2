@@ -8,18 +8,22 @@ local gpu = component.proxy(component.list("gpu")())
 gpu.bind(gpu.getScreen() or (component.list("screen")()))
 
 -- filesystem tree
-local tree = {__is_a_directory = true}
+local files = {
+  ["/"] = {children = {}}
+}
 
 local handle = assert(fs.open("/init.lua", "r"))
 
 local seq = {"|","/","-","\\"}
 local si = 1
 
-gpu.setResolution(50, 16)
-gpu.fill(1, 1, 50, 16, " ")
+local w, h = gpu.maxResolution()
+gpu.setResolution(gpu.maxResolution())
+gpu.fill(1, 1, w, h, " ")
 gpu.setForeground(0)
 gpu.setBackground(0xFFFFFF)
-gpu.set(1, 1, "             Cynosure MTAR-FS Loader              ")
+local text = "Cynosure MTAR-FS Loader"
+gpu.set(1, 1, (" "):rep(math.floor((w-#text)/2))..text..(" "):rep(math.ceil((w-#text)/2)))
 gpu.setBackground(0)
 gpu.setForeground(0xFFFFFF)
 
@@ -28,14 +32,18 @@ local function status(x, y, t, c)
   gpu.set(x, y+1, t)
 end
 
+local CHUNKS = 2048
+local startoffset = 0
 status(1, 1, "Seeking to data section...")
-local startoffset = 5536
--- seek in a hardcoded amount for speed reasons
-fs.seek(handle, "set", startoffset)
 local last_time = computer.uptime()
-repeat
-  local c = fs.read(handle, 1)
-  startoffset = startoffset + 1
+while true do
+  local chunk = fs.read(handle, CHUNKS)
+  startoffset = startoffset + CHUNKS
+  if chunk:match("\90") then
+    startoffset = startoffset - (CHUNKS - chunk:find("\90"))
+    fs.seek(handle, "set", startoffset)
+    break
+  end
   local t = computer.uptime()
   if t - last_time >= 0.1 then
     status(28, 1, seq[si])
@@ -43,7 +51,8 @@ repeat
     if not seq[si] then si = 1 end
     last_time = t
   end
-until c == "\90" -- uppercase z: magic
+end
+
 assert(fs.read(handle, 1) == "\n") -- skip \n
 
 local function split_path(path)
@@ -58,15 +67,27 @@ local function split_path(path)
   return s
 end
 
+local function clean_path(name)
+  return table.concat(split_path(name), "/")
+end
+
 local function add_to_tree(name, offset, len)
-  local cur = tree
+  local cleaned = clean_path(name)
   local segments = split_path(name)
-  if #segments == 0 then return end
-  for i=1, #segments - 1, 1 do
-    cur[segments[i]] = cur[segments[i]] or {__is_a_directory = true}
-    cur = cur[segments[i]]
+
+  for i=1, #segments do
+    local path = table.concat(segments, "/", 1, i-1)
+    files[path] = files[path] or {children = {}}
+    local add = true
+
+    for _, child in pairs(files[path].children) do
+      if child == segments[i] then add = false  break end
+    end
+    
+    if add then files[path].children[#files[path].children+1] = segments[i] end
   end
-  cur[segments[#segments]] = {offset = offset, length = len}
+
+  files[cleaned] = {offset = offset, length = len}
 end
 
 local function read(n, offset, rdata)
@@ -113,26 +134,9 @@ repeat until not read_header()
 -- create the mtar fs node --
 
 local function find(f)
-  if f == "/" or f == "" then
-    return tree
-  end
-
-  local s = split_path(f)
-  local c = tree
-
-  for i=1, #s, 1 do
-    if s[i] == "__is_a_directory" then
-      return nil, "file not found"
-    end
-
-    if not c[s[i]] then
-      return nil, "file not found"
-    end
-
-    c = c[s[i]]
-  end
-
-  return c
+  local ent = files[clean_path(f)]
+  if not ent then return nil, "file not found" end
+  return ent
 end
 
 local obj = {}
@@ -147,7 +151,7 @@ function obj.isDirectory(f)
   local n, e = find(f)
 
   if n then
-    return not not n.__is_a_directory
+    return not not n.children
   else
     return nil, e
   end
@@ -170,14 +174,12 @@ function obj.list(d)
   local n, e = find(d)
 
   if not n then return nil, e end
-  if not n.__is_a_directory then return nil, "not a directory" end
+  if not n.children then return nil, "not a directory" end
 
   local f = {}
 
-  for k, v in pairs(n) do
-    if k ~= "__is_a_directory" then
-      f[#f+1] = tostring(k)
-    end
+  for k, v in pairs(n.children) do
+    f[#f+1] = tostring(v)
   end
 
   return f
@@ -195,6 +197,7 @@ function _handle:read(n)
   n = math.min(self.fptr + n, self.node.length)
   local data = read(n - self.fptr, self.fptr + self.node.offset, true)
   self.fptr = n
+  if #data == 0 then return nil end
   return data
 end
 
@@ -234,9 +237,10 @@ function obj.open(f, m)
   local n, e = find(f)
 
   if not n then return nil, e end
-  if n.__is_a_directory then return nil, "is a directory" end
+  if n.children then return nil, "is a directory" end
 
   local new = setmetatable({
+    name = f,
     node = n, --data = read(n.length, n.offset, true),
     mode = m,
     fptr = 0
@@ -272,9 +276,18 @@ local hdl = assert(obj.open("/boot/cynosure.lua", "r"))
 local ldme = hdl:read(hdl.node.length)
 hdl:close()
 
-_G.mtarfs = obj
+_G.mtarfs = obj--[[
+setmetatable({}, {__index = function(t,k)
+  return function(...)
+    status(156-#k, 1, k)
+    return obj[k](...)
+  end
+end})--]]
 
-gpu.setResolution(gpu.maxResolution())
+status(1, 4, "Final collectgarbage()...")
+for i=1, 20 do
+  computer.pullSignal(0)
+end
 
 assert(load(ldme, "=mtarfs:/boot/cynosure.lua", "t", _G))(
   "root=mtar", "init=/bin/init.lua", "loglevel=5")
