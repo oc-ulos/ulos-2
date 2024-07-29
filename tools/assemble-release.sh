@@ -99,19 +99,20 @@ if [ "$1" = "mtar" ]; then
   printf "=> Generating self-extracting release image\n"
   mkdir build/{dev,proc,tmp,install}
   touch build/{dev,proc,tmp,install}/.keepme
-  # slightly hacky way installer image config
+  # slightly hacky installer image config
   cat > build/etc/issue << EOF
 Welcome to ULOS 2!
 
+This is a read-only live image.
 To install ULOS 2, run 'install' from the shell.
-Default credentials are root/root.
+Default login credentials are root/root.
 
 EOF
 
 cat > build/etc/inittab << EOF
 id:1:initdefault:
 fs::bootwait:/bin/readfstab.lua
-1:1:respawn:/bin/getty.lua tty1 -a root
+1:1:respawn:/bin/getty.lua -a root tty1
 EOF
 
   find build -type f | tools/mtar.lua build > release.mtar
