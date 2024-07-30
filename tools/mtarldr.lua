@@ -103,19 +103,28 @@ local function read(n, offset, rdata)
   return data
 end
 
+local y = 3
+local function log(...)
+  status(1,y,...)
+  y=y+1
+  if y>=h then gpu.copy(1,2,w,h,0,-1) gpu.fill(1,h,w,1," ") y=y-1 end
+end
+
+local f = 0
 local function read_header()
+  f = f + 1
+  local chunk = fs.read(handle, CHUNKS)
+  if (not chunk) or #chunk < 14 then return nil end
   -- skip V1 header
-  fs.read(handle, 3)
-  local namelen = fs.read(handle, 2)
-  if not namelen then
-    return nil
-  end
-  namelen = string.unpack(">I2", namelen)
-  local name = read(namelen, nil, true)
-  local flendat = fs.read(handle, 8)
-  if not flendat then return end
-  local flen = string.unpack(">I8", flendat)
-  local offset = fs.seek(handle, "cur", 0)
+  chunk = chunk:sub(4)
+  -- name length
+  local namelen = string.unpack(">I2", chunk:sub(1,2))
+  local name = chunk:sub(3, 3+namelen-1)
+  chunk = chunk:sub(#name + 3)
+
+  local remaining = #chunk - 8
+  local flen = string.unpack(">I8", chunk:sub(1,8)) - remaining
+  local offset = fs.seek(handle, "cur", 0) - remaining
   local t = computer.uptime()
   if t - last_time >= 0.1 then
     status(25, 2, seq[si])
@@ -124,7 +133,7 @@ local function read_header()
     last_time = t
   end
   fs.seek(handle, "cur", flen)
-  add_to_tree(name, offset, flen)
+  add_to_tree(name, offset, flen + remaining)
   return true
 end
 
