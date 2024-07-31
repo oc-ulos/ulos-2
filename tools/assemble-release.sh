@@ -115,10 +115,12 @@ fs::bootwait:/bin/readfstab.lua
 1:1:respawn:/bin/getty.lua -a root tty1
 EOF
 
-  find build -type f | tools/mtar.lua build > release.mtar
-  cat  > $OS-$(date +%y.%m).lua tools/mtarldr.lua release.mtar - << EOF
-]=======]
-EOF
+  DIR=build PROGNAME=init CONFIG=config/mtarldr \
+    mtarldr/scripts/build
+  #find build -type f | tools/mtar.lua build > release.mtar
+  #cat  >  tools/mtarldr.lua release.mtar - << EOF
+#]=======]
+#EOF
 fi
 
 if [ "$1" = "ocvm" ]; then
